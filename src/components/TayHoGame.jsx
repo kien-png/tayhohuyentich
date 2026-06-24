@@ -805,6 +805,15 @@ export default function TayHoGame() {
     if (choice.correct) {
       setWrongChoiceIndex(null);
       
+      if (currentStage === 1 && dialogueState === 'question1') {
+        setVerified(false);
+        setDialogueState('postQuestion1Dialogues');
+        setDialogueIndex(0);
+        playChime(true);
+        playAudioFile('/assets/audio/a4.mp3');
+        return;
+      }
+      
       if (currentStage === 3 && dialogueState === 'question1') {
         setVerified(false);
         setDialogueState('preQuestion2Dialogues');

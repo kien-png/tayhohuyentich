@@ -72,7 +72,7 @@ export const kichbanData = [
         {
           text: "3 lối",
           correct: true,
-          feedback: "Chính xác! Tam Quan có 3 lối đi. Cửa giữa dành cho bậc tôn quý, hai cửa bên dành cho người thường. Hãy bước qua để vào sân phủ."
+          feedback: ""
         }
       ]
     },
