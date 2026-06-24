@@ -105,21 +105,7 @@ export default function TayHoGame() {
       
       audio.onerror = (e) => {
         console.error('Background music error:', e);
-        console.log('Trying alternative path...');
-        // Try alternative path
-        const altAudio = new Audio('src/assets/audio/background-music.mp3');
-        altAudio.loop = true;
-        altAudio.volume = 0.3;
-        backgroundMusicRef.current = altAudio;
-        altAudio.play().catch(err => {
-          console.error('Alt path failed:', err);
-          // Try importing as module
-          const moduleAudio = new Audio('/assets/audio/background-music.mp3');
-          moduleAudio.loop = true;
-          moduleAudio.volume = 0.3;
-          backgroundMusicRef.current = moduleAudio;
-          moduleAudio.play().catch(err2 => console.error('Module path failed:', err2));
-        });
+        console.error('Background music file not found at /assets/audio/background-music.mp3');
       };
       
       backgroundMusicRef.current = audio;
@@ -676,6 +662,7 @@ export default function TayHoGame() {
         setAudioEnabled(true);
         // Play background music after setting audioEnabled to true
         setTimeout(() => {
+          console.log('Starting background music...');
           playBackgroundMusic();
         }, 100);
       } catch (e) {
