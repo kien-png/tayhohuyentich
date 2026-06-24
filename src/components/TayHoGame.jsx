@@ -233,8 +233,12 @@ export default function TayHoGame() {
     if (stageIndex === 0 && dialogueIndex >= 0 && dialogueIndex <= 5) {
       audioPath = `/assets/audio/a1.mp3`;
     }
-    // Stage 1 - file a3 covers dialogue 0 to 2 + question
-    else if (stageIndex === 1 && dialogueIndex >= 0 && dialogueIndex <= 2) {
+    // Stage 1 - file a2 covers dialogue 0 to 4 (intro to Tam Quan)
+    else if (stageIndex === 1 && dialogueIndex >= 0 && dialogueIndex <= 4) {
+      audioPath = `/assets/audio/a2.mp3`;
+    }
+    // Stage 1 - file a3 covers dialogue 5 to 7 + question
+    else if (stageIndex === 1 && dialogueIndex >= 5 && dialogueIndex <= 7) {
       audioPath = `/assets/audio/a3.mp3`;
     }
     // Stage 2 (Tam Tòa) - file a8 covers dialogue 0 to 1
@@ -444,6 +448,10 @@ export default function TayHoGame() {
     if (stageIndex === 0) {
       audioPath = `/assets/audio/a2.mp3`;
     }
+    // Stage 1 postChoiceDialogues - file a3 covers "Tốt lắm..." and question
+    else if (stageIndex === 1) {
+      audioPath = `/assets/audio/a3.mp3`;
+    }
     
     // If no specific audio file, try default naming
     if (!audioPath) {
@@ -547,30 +555,52 @@ export default function TayHoGame() {
     // Feedback states (question1_feedback, question2_feedback, etc.) are NOT included here
     // because their audio is already triggered directly inside handleChoiceSelect / handleOptionSelect.
     if (dialogueState === 'dialogues') {
-      setTimeout(() => {
-        playNarration(currentStage, 0);
-      }, 300);
+      if (currentStage === 1) {
+        if (dialogueIndex === 0) {
+          setTimeout(() => {
+            playNarration(currentStage, 0);
+          }, 300);
+        } else if (dialogueIndex === 5) {
+          setTimeout(() => {
+            playNarration(currentStage, 5);
+          }, 300);
+        }
+      } else {
+        if (dialogueIndex === 0) {
+          setTimeout(() => {
+            playNarration(currentStage, 0);
+          }, 300);
+        }
+      }
     } else if (dialogueState === 'postChoiceDialogues') {
-      setTimeout(() => {
-        playPostChoiceNarration(currentStage, 0);
-      }, 300);
+      if (dialogueIndex === 0) {
+        setTimeout(() => {
+          playPostChoiceNarration(currentStage, 0);
+        }, 300);
+      }
     } else if (dialogueState === 'question1' || dialogueState === 'question2' || dialogueState === 'question3') {
       stopNarration();
     } else if (dialogueState === 'postVerifiedDialogues') {
-      setTimeout(() => {
-        playPostVerifiedNarration(currentStage, 0);
-      }, 300);
+      if (dialogueIndex === 0) {
+        setTimeout(() => {
+          playPostVerifiedNarration(currentStage, 0);
+        }, 300);
+      }
     } else if (dialogueState === 'postQuestion1Dialogues') {
-      setTimeout(() => {
-        playPostQuestion1Narration(currentStage, 0);
-      }, 300);
+      if (dialogueIndex === 0) {
+        setTimeout(() => {
+          playPostQuestion1Narration(currentStage, 0);
+        }, 300);
+      }
     } else if (dialogueState === 'postQuestion2Dialogues') {
-      setTimeout(() => {
-        playPostQuestion2Narration(currentStage, 0);
-      }, 300);
+      if (dialogueIndex === 0) {
+        setTimeout(() => {
+          playPostQuestion2Narration(currentStage, 0);
+        }, 300);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audioEnabled, gameStarted, showDialogueBox, dialogueState, currentStage]);
+  }, [audioEnabled, gameStarted, showDialogueBox, dialogueState, currentStage, dialogueIndex]);
 
   // Control background music volume during narration
   useEffect(() => {
@@ -642,10 +672,8 @@ export default function TayHoGame() {
       if (dialogueIndex < stageData.dialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
-        if (currentStage === 0) {
+        if (currentStage === 0 || currentStage === 1) {
           setDialogueState('choices');
-        } else if (currentStage === 1) {
-          setDialogueState('question1');
         } else if (currentStage === 2) {
           setDialogueState('question1');
         } else if (currentStage === 3) {
@@ -662,10 +690,16 @@ export default function TayHoGame() {
       if (dialogueIndex < stageData.postChoiceDialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
-        // After postChoiceDialogues → complete + countdown
-        setDialogueState('complete');
-        if (stageData.countdown > 0) {
-          startCountdown(stageData.countdown);
+        if (currentStage === 1) {
+          // Stage 1: sau postChoiceDialogues → question1
+          setDialogueState('question1');
+          setDialogueIndex(0);
+        } else {
+          // Các stage khác → complete + countdown
+          setDialogueState('complete');
+          if (stageData.countdown > 0) {
+            startCountdown(stageData.countdown);
+          }
         }
       }
     }
@@ -864,8 +898,13 @@ export default function TayHoGame() {
       setWishPath(choice.wish);
     }
 
-    // Nếu reply rỗng → kiểm tra postChoiceDialogues trước
+    // Nếu reply rỗng → Stage 0 nhảy thẳng sang stage tiếp theo
     if (!choice.reply) {
+      if (currentStage === 0) {
+        playChime(true);
+        handleNextStage();
+        return;
+      }
       if (stageData.postChoiceDialogues && stageData.postChoiceDialogues.length > 0) {
         setDialogueState('postChoiceDialogues');
         setDialogueIndex(0);
@@ -1026,7 +1065,11 @@ export default function TayHoGame() {
       className={`relative w-full min-h-screen overflow-hidden bg-black flex flex-col justify-between transition-all duration-700 ${incorrectFlash ? 'animate-incorrect-glow' : ''
         }`}
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(14, 7, 5, 0.45) 0%, rgba(14, 7, 5, 0.3) 50%, rgba(14, 7, 5, 0.9) 100%), url(${stageData.background})`,
+        backgroundImage: `linear-gradient(to bottom, rgba(14, 7, 5, 0.45) 0%, rgba(14, 7, 5, 0.3) 50%, rgba(14, 7, 5, 0.9) 100%), url(${
+          (currentStage === 0 && (dialogueState === 'postChoiceDialogues' || dialogueState === 'complete'))
+            ? kichbanData[1].background
+            : stageData.background
+        })`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

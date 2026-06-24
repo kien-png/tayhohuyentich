@@ -30,16 +30,7 @@ export const kichbanData = [
         text: "BẮT ĐẦU HÀNH TRÌNH",
         reply: ""
       }
-    ],
-    postChoiceDialogues: [
-      "Muốn bước vào một nơi linh thiêng, trước tiên phải đi qua cánh cửa của sự quan sát.",
-      "Và cánh cửa đầu tiên đang ở ngay phía trước con.",
-      "Ta có những câu hỏi nhưng đáp án không nằm ở đây.",
-      "Hãy đi đến Tam Quan của phủ, đứng trước cổng và nhìn thật kỹ.",
-      "Trên Tam Quan có rất nhiều chi tiết mà người ta thường vô tình bỏ qua."
-    ],
-    buttonText: "ĐÃ ĐẾN TAM QUAN PHỦ",
-    countdown: 5
+    ]
   },
   {
     stage: 1,
@@ -52,6 +43,19 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
     dialogues: [
+      "Muốn bước vào một nơi linh thiêng, trước tiên phải đi qua cánh cửa của sự quan sát.",
+      "Và cánh cửa đầu tiên đang ở ngay phía trước con.",
+      "Ta có những câu hỏi nhưng đáp án không nằm ở đây.",
+      "Hãy đi đến Tam Quan của phủ, đứng trước cổng và nhìn thật kỹ.",
+      "Trên Tam Quan có rất nhiều chi tiết mà người ta thường vô tình bỏ qua."
+    ],
+    choices: [
+      {
+        text: "ĐÃ ĐẾN TAM QUAN PHỦ",
+        reply: ""
+      }
+    ],
+    postChoiceDialogues: [
       "Tốt lắm. Con đã bước những bước đầu tiên trên hành trình này.",
       "Nhưng để vào được câu chuyện của Phủ Tây Hồ, con phải đi qua cánh cổng của ký ức.",
       "Hãy ngẩng đầu nhìn về trước mắt, cho ta biết: Cổng Tam Quan có bao nhiêu lối đi?"
@@ -169,7 +173,7 @@ export const kichbanData = [
     postQuestion2Dialogues: [
       "Có một điện thờ đặc biệt đang chờ con khám phá. Nào, chúng ta tiếp tục khám phá nhé. Ta còn một câu hỏi nữa dành cho con đây. Hãy đến Điện Sơn Trang."
     ],
-    
+
     buttonText: "ĐÃ ĐẾN ĐIỆN SƠN TRANG",
     countdown: 5
   },
@@ -178,7 +182,7 @@ export const kichbanData = [
     stage: 3,
     title: "Điện Sơn Trang",
     location: "Vị trí: Điện Sơn Trang",
-    speaker: "Cô",  
+    speaker: "Cô",
     background: anh5,
     character: anh1,
     characterName: "Cô",
