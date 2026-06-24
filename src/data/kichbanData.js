@@ -116,9 +116,9 @@ export const kichbanData = [
     postQuestion1Dialogues: [
       "Tốt rồi! Con đã tìm được manh mối đầu tiên.",
       "Nhưng hành trình vẫn chưa hết đâu. Theo ta vào sân phủ nhé.",
-      "Ở đây còn giấu một bí mật thú vị về cách người xưa xây dựng ngôi phủ này. Hãy tìm ban thờ Tam Tòa Thánh Mẫu."
+      "Ở đây còn giấu một bí mật thú vị về cách người xưa xây dựng ngôi phủ này. Hãy tìm Phủ chính."
     ],
-    buttonText: "ĐÃ ĐẾN TAM TÒA THÁNH MẪU",
+    buttonText: "ĐÃ ĐẾN PHỦ CHÍNH",
     countdown: 5
   },
 
@@ -132,7 +132,7 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
     dialogues: [
-      "Trước mặt con có ngôi nhà 2 tầng nhỏ ở giữa sân gọi là Tam Tòa Thánh Mẫu, chia làm 3 nếp — Tiền tế, Trung đường, Hậu cung.",
+      "Trước mặt con có ngôi nhà 2 tầng nhỏ ở giữa sân gọi là Phủ chính, chia làm 3 nếp — Tiền tế, Trung đường, Hậu cung.",
       "Hãy nhìn vào Tiền tế (lớp đầu) và cho ta biết có bao nhiêu cửa chính phía trước?"
     ],
     question: {
@@ -213,14 +213,14 @@ export const kichbanData = [
           feedback: "Hãy tìm lại đúng vị trí và quan sát kỹ hơn nhé."
         },
         {
-          text: "Không có tượng Ngũ Hổ",
+          text: "Vàng",
           correct: true,
-          feedback: "Khác với những ban thờ khác trong phủ, nơi này mang màu sắc của núi rừng nhiều hơn. Từ các vị Chúa Sơn Trang, các Cô Sơn Trang cho đến những lễ vật dâng cúng, tất cả đều gợi nhớ đến thế giới của cây cối, khe suối và đại ngàn. Điều đó không phải ngẫu nhiên. Hãy cho ta biết vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?"
+          feedback: "Đúng vậy! Tượng hổ ở ban thờ Sơn Trang thường được sơn màu vàng."
         }
       ]
     },
     question2: {
-      text: "Vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?",
+      text: "Khác với những ban thờ khác trong phủ, nơi này mang màu sắc của núi rừng nhiều hơn. Từ các vị Chúa Sơn Trang, các Cô Sơn Trang cho đến những lễ vật dâng cúng, tất cả đều gợi nhớ đến thế giới của cây cối, khe suối và đại ngàn. Điều đó không phải ngẫu nhiên. Hãy cho ta biết vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?",
       choices: [
         {
           text: "Để thờ các vị thần núi rừng",
