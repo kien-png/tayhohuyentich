@@ -107,11 +107,19 @@ export default function TayHoGame() {
         console.error('Background music error:', e);
         console.log('Trying alternative path...');
         // Try alternative path
-        const altAudio = new Audio('./src/assets/audio/background-music.mp3');
+        const altAudio = new Audio('src/assets/audio/background-music.mp3');
         altAudio.loop = true;
         altAudio.volume = 0.3;
         backgroundMusicRef.current = altAudio;
-        altAudio.play().catch(err => console.error('Alt path failed:', err));
+        altAudio.play().catch(err => {
+          console.error('Alt path failed:', err);
+          // Try importing as module
+          const moduleAudio = new Audio('/assets/audio/background-music.mp3');
+          moduleAudio.loop = true;
+          moduleAudio.volume = 0.3;
+          backgroundMusicRef.current = moduleAudio;
+          moduleAudio.play().catch(err2 => console.error('Module path failed:', err2));
+        });
       };
       
       backgroundMusicRef.current = audio;
@@ -744,6 +752,15 @@ export default function TayHoGame() {
       }
     }
   }, [audioEnabled, gameStarted, dialogueState, dialogueIndex, currentStage]);
+
+  // Control background music volume during narration
+  useEffect(() => {
+    if (isNarrationPlaying) {
+      adjustBackgroundMusicVolume(0.1); // Duck to 10% during narration
+    } else {
+      adjustBackgroundMusicVolume(0.3); // Return to 30% when narration stops
+    }
+  }, [isNarrationPlaying]);
 
   // Stop narration when leaving active states or changing stage
   useEffect(() => {
