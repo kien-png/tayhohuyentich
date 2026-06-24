@@ -1275,7 +1275,7 @@ export default function TayHoGame() {
 
       {/* Interface Dialogue Box Section */}
       <div
-        className={`w-full px-2 sm:px-4 pb-4 sm:pb-6 relative z-20 flex flex-col items-center gap-2 sm:gap-3 shrink-0 transition-opacity duration-1000 ${
+        className={`w-full px-2 sm:px-4 pb-8 sm:pb-6 mb-2 sm:mb-0 relative z-20 flex flex-col items-center gap-2 sm:gap-3 shrink-0 transition-opacity duration-1000 ${
           gameStarted && dialogueVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
