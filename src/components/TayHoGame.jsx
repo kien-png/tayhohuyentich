@@ -189,13 +189,14 @@ export default function TayHoGame() {
       gain.connect(ctx.destination);
     } catch (e) { }
   };
-  const playAudioFile = async (audioPath) => {
+  const playAudioFile = async (audioPath, forcePlay = false) => {
     if (!audioEnabled || !audioPath) return;
     
     try {
       if (narratorAudioRef.current) {
         const currentSrc = narratorAudioRef.current.src;
-        if (currentSrc && (currentSrc.endsWith(audioPath) || decodeURIComponent(currentSrc).endsWith(audioPath))) {
+        const isSameFile = currentSrc && (currentSrc.endsWith(audioPath) || decodeURIComponent(currentSrc).endsWith(audioPath));
+        if (!forcePlay && isSameFile) {
           if (!narratorAudioRef.current.paused && !narratorAudioRef.current.ended) {
             console.log(`Audio ${audioPath} is already playing, keeping it.`);
             return;
@@ -267,10 +268,8 @@ export default function TayHoGame() {
       audioPath = `/assets/audio/stage${stageIndex}-dialogue${dialogueIndex}.mp3`;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
-
-  // Voice narration helpers
   const playQuestionNarration = async (stageIndex, questionType = 'question1') => {
     let audioPath = null;
     
@@ -309,7 +308,7 @@ export default function TayHoGame() {
       audioPath = `/assets/audio/stage${stageIndex}-question.mp3`;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
 
   // Play narration for question feedback
@@ -361,7 +360,7 @@ export default function TayHoGame() {
       return;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
 
   // Play narration for postVerifiedDialogues
@@ -378,10 +377,8 @@ export default function TayHoGame() {
       return;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
-
-  // Play narration for postQuestion1Dialogues
   const playPostQuestion1Narration = async (stageIndex, dialogueIndex) => {
     let audioPath = null;
     
@@ -399,15 +396,17 @@ export default function TayHoGame() {
       return;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
-
-  // Play narration for postQuestion2Dialogues
   const playPostQuestion2Narration = async (stageIndex, dialogueIndex) => {
     let audioPath = null;
     
+    // Stage 1 (Tam Quan) postQuestion2Dialogues - file a7
+    if (stageIndex === 1) {
+      audioPath = `/assets/audio/a7.mp3`;
+    }
     // Stage 2 (Tam Tòa) postQuestion2Dialogues - file a12
-    if (stageIndex === 2) {
+    else if (stageIndex === 2) {
       audioPath = `/assets/audio/a12.mp3`;
     }
     // Stage 3 (Điện Sơn Trang) postQuestion2Dialogues - file a17
@@ -420,10 +419,8 @@ export default function TayHoGame() {
       return;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
-
-  // Play narration for wish feedback
   const playWishFeedbackNarration = async (stageIndex) => {
     let audioPath = null;
     
@@ -437,10 +434,8 @@ export default function TayHoGame() {
       return;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
-
-  // Play narration for postChoiceDialogues
   const playPostChoiceNarration = async (stageIndex, dialogueIndex) => {
     let audioPath = null;
     
@@ -458,7 +453,7 @@ export default function TayHoGame() {
       audioPath = `/assets/audio/stage${stageIndex}-postchoice${dialogueIndex}.mp3`;
     }
 
-    await playAudioFile(audioPath);
+    await playAudioFile(audioPath, true);
   };
 
   const stopNarration = () => {
@@ -563,6 +558,13 @@ export default function TayHoGame() {
         } else if (dialogueIndex === 5) {
           setTimeout(() => {
             playNarration(currentStage, 5);
+          }, 300);
+        }
+      } else if (currentStage === 5) {
+        // Stage 5: 2 dialogues - a21 (index 0) and a22 (index 1)
+        if (dialogueIndex === 0 || dialogueIndex === 1) {
+          setTimeout(() => {
+            playNarration(currentStage, dialogueIndex);
           }, 300);
         }
       } else {
@@ -848,12 +850,30 @@ export default function TayHoGame() {
         return;
       }
       
+      if (currentStage === 2 && dialogueState === 'question1') {
+        setVerified(false);
+        setDialogueState('postVerifiedDialogues');
+        setDialogueIndex(0);
+        playChime(true);
+        playAudioFile('/assets/audio/a9.mp3');
+        return;
+      }
+      
       if (currentStage === 3 && dialogueState === 'question1') {
         setVerified(false);
         setDialogueState('preQuestion2Dialogues');
         setDialogueIndex(0);
         playChime(true);
         playAudioFile('/assets/audio/a14.mp3');
+        return;
+      }
+      
+      if (currentStage === 4 && dialogueState === 'question1') {
+        setVerified(false);
+        setDialogueState('postQuestion1Dialogues');
+        setDialogueIndex(0);
+        playChime(true);
+        playAudioFile('/assets/audio/a19.mp3');
         return;
       }
 
