@@ -89,7 +89,7 @@ export default function TayHoGame() {
       console.log('Attempting to play background music...');
       const audio = new Audio('/assets/audio/background-music.mp3');
       audio.loop = true;
-      audio.volume = 0.3;
+      audio.volume = 0.15;
       
       audio.onloadstart = () => {
         console.log('Background music loading...');
@@ -109,14 +109,14 @@ export default function TayHoGame() {
         // Try alternative path
         const altAudio = new Audio('src/assets/audio/background-music.mp3');
         altAudio.loop = true;
-        altAudio.volume = 0.3;
+        altAudio.volume = 0.15;
         backgroundMusicRef.current = altAudio;
         altAudio.play().catch(err => {
           console.error('Alt path failed:', err);
           // Try importing as module
           const moduleAudio = new Audio('/assets/audio/background-music.mp3');
           moduleAudio.loop = true;
-          moduleAudio.volume = 0.3;
+          moduleAudio.volume = 0.15;
           backgroundMusicRef.current = moduleAudio;
           moduleAudio.play().catch(err2 => console.error('Module path failed:', err2));
         });
@@ -196,24 +196,20 @@ export default function TayHoGame() {
       else if (stageIndex === 1 && dialogueIndex >= 0 && dialogueIndex <= 2) {
         audioPath = `/assets/audio/a3.mp3`;
       }
-      // Stage 2 - file a4 covers dialogue 0 to 1
+      // Stage 2 (Tam Tòa) - file a8 covers dialogue 0 to 1
       else if (stageIndex === 2 && dialogueIndex >= 0 && dialogueIndex <= 1) {
-        audioPath = `/assets/audio/a4.mp3`;
-      }
-      // Stage 3 - file a8 covers dialogue 0 to 1
-      else if (stageIndex === 3 && dialogueIndex >= 0 && dialogueIndex <= 1) {
         audioPath = `/assets/audio/a8.mp3`;
       }
-      // Stage 4 - file a13 covers dialogue 0
-      else if (stageIndex === 4 && dialogueIndex === 0) {
+      // Stage 3 (Điện Sơn Trang) - file a13 covers dialogue 0
+      else if (stageIndex === 3 && dialogueIndex === 0) {
         audioPath = `/assets/audio/a13.mp3`;
       }
-      // Stage 5 - file a18 covers dialogue 0
-      else if (stageIndex === 5 && dialogueIndex === 0) {
+      // Stage 4 (Lầu Cô - Lầu Cậu) - file a18 covers dialogue 0
+      else if (stageIndex === 4 && dialogueIndex === 0) {
         audioPath = `/assets/audio/a18.mp3`;
       }
-      // Stage 6 - file a21 covers dialogue 0, file a22 covers dialogue 1
-      else if (stageIndex === 6) {
+      // Stage 5 (Kết Duyên Lành) - file a21 covers dialogue 0, file a22 covers dialogue 1
+      else if (stageIndex === 5) {
         if (dialogueIndex === 0) {
           audioPath = `/assets/audio/a21.mp3`;
         } else if (dialogueIndex === 1) {
@@ -226,13 +222,7 @@ export default function TayHoGame() {
         audioPath = `/assets/audio/stage${stageIndex}-dialogue${dialogueIndex}.mp3`;
       }
 
-      // Check if we're already playing the same audio file
-      if (narratorAudioRef.current && narratorAudioRef.current.src.includes(audioPath.split('/').pop())) {
-        // Same audio file is already playing, don't restart
-        return;
-      }
-
-      // Stop current narration only if switching to different audio
+      // Stop any currently playing narration before starting new one
       if (narratorAudioRef.current) {
         narratorAudioRef.current.pause();
         narratorAudioRef.current.currentTime = 0;
@@ -266,30 +256,31 @@ export default function TayHoGame() {
       
       // Stage 1 - question is part of a3 file
       if (stageIndex === 1) {
-        audioPath = `/assets/audio/a3.mp3`;
+        if (questionType === 'question1') {
+          audioPath = `/assets/audio/a3.mp3`;
+        } else if (questionType === 'question2') {
+          // Stage 1 question2 (Sân Phủ) - part of a4 file
+          audioPath = `/assets/audio/a4.mp3`;
+        }
       }
-      // Stage 2 - question is part of a4 file
+      // Stage 2 (Tam Tòa) - different questions
       else if (stageIndex === 2) {
-        audioPath = `/assets/audio/a4.mp3`;
-      }
-      // Stage 3 - different questions
-      else if (stageIndex === 3) {
         if (questionType === 'question1') {
           audioPath = `/assets/audio/a8.mp3`;
         } else if (questionType === 'question2') {
           audioPath = `/assets/audio/a9.mp3`;
         }
       }
-      // Stage 4 - different questions  
-      else if (stageIndex === 4) {
+      // Stage 3 (Điện Sơn Trang) - different questions
+      else if (stageIndex === 3) {
         if (questionType === 'question1') {
           audioPath = `/assets/audio/a13.mp3`;
         } else if (questionType === 'question2') {
           audioPath = `/assets/audio/a14.mp3`;
         }
       }
-      // Stage 5 - question is part of a18 file
-      else if (stageIndex === 5) {
+      // Stage 4 (Lầu Cô - Lầu Cậu) - question is part of a18 file
+      else if (stageIndex === 4) {
         audioPath = `/assets/audio/a18.mp3`;
       }
       
@@ -298,13 +289,7 @@ export default function TayHoGame() {
         audioPath = `/assets/audio/stage${stageIndex}-question.mp3`;
       }
 
-      // Check if we're already playing the same audio file
-      if (narratorAudioRef.current && narratorAudioRef.current.src.includes(audioPath.split('/').pop())) {
-        // Same audio file is already playing, don't restart
-        return;
-      }
-
-      // Stop current narration only if switching to different audio
+      // Stop any currently playing narration before starting new one
       if (narratorAudioRef.current) {
         narratorAudioRef.current.pause();
         narratorAudioRef.current.currentTime = 0;
@@ -336,26 +321,26 @@ export default function TayHoGame() {
     try {
       let audioPath = null;
       
-      // Stage 2 feedback
-      if (stageIndex === 2) {
+      // Stage 1 question2 (Sân Phủ) feedback
+      if (stageIndex === 1 && questionType === 'question2') {
         if (isCorrect) {
           audioPath = `/assets/audio/a6.mp3`; // Correct answer feedback
         } else {
           audioPath = `/assets/audio/a5.mp3`; // Wrong answer feedback
         }
       }
-      // Stage 3 feedback
-      else if (stageIndex === 3 && questionType === 'question2') {
+      // Stage 2 (Tam Tòa) feedback
+      else if (stageIndex === 2 && questionType === 'question2') {
         if (isCorrect) {
           audioPath = `/assets/audio/a11.mp3`; // Correct answer feedback
         } else {
           audioPath = `/assets/audio/a10.mp3`; // Wrong answer feedback
         }
       }
-      // Stage 4 feedback
-      else if (stageIndex === 4) {
+      // Stage 3 (Điện Sơn Trang) feedback
+      else if (stageIndex === 3) {
         if (questionType === 'question1' && isCorrect) {
-          audioPath = `/assets/audio/a14.mp3`; // Stage 4 question1 correct leads to question2
+          audioPath = `/assets/audio/a14.mp3`; // Stage 3 question1 correct leads to question2
         } else if (questionType === 'question2') {
           if (isCorrect) {
             audioPath = `/assets/audio/a16.mp3`; // Correct answer feedback
@@ -364,9 +349,9 @@ export default function TayHoGame() {
           }
         }
       }
-      // Stage 5 feedback
-      else if (stageIndex === 5 && questionType === 'question1' && isCorrect) {
-        audioPath = `/assets/audio/a19.mp3`; // Stage 5 question1 correct feedback + postQuestion1
+      // Stage 4 (Lầu Cô - Lầu Cậu) feedback
+      else if (stageIndex === 4 && questionType === 'question1' && isCorrect) {
+        audioPath = `/assets/audio/a19.mp3`; // Stage 4 question1 correct feedback + postQuestion1
       }
       
       // If no specific audio file, skip
@@ -409,8 +394,8 @@ export default function TayHoGame() {
     try {
       let audioPath = null;
       
-      // Stage 3 postVerifiedDialogues - file a9
-      if (stageIndex === 3) {
+      // Stage 2 (Tam Tòa) postVerifiedDialogues - file a9
+      if (stageIndex === 2) {
         audioPath = `/assets/audio/a9.mp3`;
       }
       
@@ -421,10 +406,6 @@ export default function TayHoGame() {
 
       console.log(`Playing postVerified audio: ${audioPath}`);
 
-      // Check if we're already playing the same audio file
-      if (narratorAudioRef.current && narratorAudioRef.current.src.includes(audioPath.split('/').pop())) {
-        return;
-      }
 
       if (narratorAudioRef.current) {
         narratorAudioRef.current.pause();
@@ -457,12 +438,12 @@ export default function TayHoGame() {
     try {
       let audioPath = null;
       
-      // Stage 2 postQuestion1Dialogues - file a7
-      if (stageIndex === 2) {
-        audioPath = `/assets/audio/a7.mp3`;
+      // Stage 1 postQuestion1Dialogues (Sân Phủ dialogues) - file a4
+      if (stageIndex === 1) {
+        audioPath = `/assets/audio/a4.mp3`;
       }
-      // Stage 5 postQuestion1Dialogues - part of a19
-      else if (stageIndex === 5) {
+      // Stage 4 (Lầu Cô - Lầu Cậu) postQuestion1Dialogues - part of a19
+      else if (stageIndex === 4) {
         audioPath = `/assets/audio/a19.mp3`;
       }
       
@@ -473,10 +454,6 @@ export default function TayHoGame() {
 
       console.log(`Playing postQuestion1 audio: ${audioPath}`);
 
-      // Check if we're already playing the same audio file
-      if (narratorAudioRef.current && narratorAudioRef.current.src.includes(audioPath.split('/').pop())) {
-        return;
-      }
 
       if (narratorAudioRef.current) {
         narratorAudioRef.current.pause();
@@ -509,12 +486,12 @@ export default function TayHoGame() {
     try {
       let audioPath = null;
       
-      // Stage 3 postQuestion2Dialogues - file a12
-      if (stageIndex === 3) {
+      // Stage 2 (Tam Tòa) postQuestion2Dialogues - file a12
+      if (stageIndex === 2) {
         audioPath = `/assets/audio/a12.mp3`;
       }
-      // Stage 4 postQuestion2Dialogues - file a17
-      else if (stageIndex === 4) {
+      // Stage 3 (Điện Sơn Trang) postQuestion2Dialogues - file a17
+      else if (stageIndex === 3) {
         audioPath = `/assets/audio/a17.mp3`;
       }
       
@@ -525,10 +502,6 @@ export default function TayHoGame() {
 
       console.log(`Playing postQuestion2 audio: ${audioPath}`);
 
-      // Check if we're already playing the same audio file
-      if (narratorAudioRef.current && narratorAudioRef.current.src.includes(audioPath.split('/').pop())) {
-        return;
-      }
 
       if (narratorAudioRef.current) {
         narratorAudioRef.current.pause();
@@ -561,8 +534,8 @@ export default function TayHoGame() {
     try {
       let audioPath = null;
       
-      // Stage 5 wish feedback - file a20
-      if (stageIndex === 5) {
+      // Stage 4 (Lầu Cô - Lầu Cậu) wish feedback - file a20
+      if (stageIndex === 4) {
         audioPath = `/assets/audio/a20.mp3`;
       }
       
@@ -614,13 +587,7 @@ export default function TayHoGame() {
         audioPath = `/assets/audio/stage${stageIndex}-postchoice${dialogueIndex}.mp3`;
       }
 
-      // Check if we're already playing the same audio file
-      if (narratorAudioRef.current && narratorAudioRef.current.src.includes(audioPath.split('/').pop())) {
-        // Same audio file is already playing, don't restart
-        return;
-      }
-
-      // Stop current narration only if switching to different audio
+      // Stop any currently playing narration before starting new one
       if (narratorAudioRef.current) {
         narratorAudioRef.current.pause();
         narratorAudioRef.current.currentTime = 0;
@@ -707,26 +674,26 @@ export default function TayHoGame() {
     };
   }, []);
 
-  // Auto-play narration when dialogue changes
+  // Auto-play narration when dialogue state or stage changes
+  // NOTE: dialogueIndex is intentionally NOT in deps — audio plays once per state entry,
+  // not on every click-next within the same state.
   useEffect(() => {
     if (audioEnabled && gameStarted) {
-      console.log(`Audio check: Stage ${currentStage}, DialogueState: ${dialogueState}, DialogueIndex: ${dialogueIndex}`);
+      console.log(`Audio trigger: Stage ${currentStage}, DialogueState: ${dialogueState}`);
       
       if (dialogueState === 'dialogues') {
         setTimeout(() => {
-          playNarration(currentStage, dialogueIndex);
+          playNarration(currentStage, 0);
         }, 300);
       } else if (dialogueState === 'postChoiceDialogues') {
         setTimeout(() => {
-          playPostChoiceNarration(currentStage, dialogueIndex);
+          playPostChoiceNarration(currentStage, 0);
         }, 300);
       } else if (dialogueState === 'question1') {
-        console.log('Playing question1 audio for stage', currentStage);
         setTimeout(() => {
           playQuestionNarration(currentStage, 'question1');
         }, 300);
       } else if (dialogueState === 'question2') {
-        console.log('Playing question2 audio for stage', currentStage);
         setTimeout(() => {
           playQuestionNarration(currentStage, 'question2');
         }, 300);
@@ -735,30 +702,28 @@ export default function TayHoGame() {
           playQuestionNarration(currentStage, 'question3');
         }, 300);
       } else if (dialogueState === 'postVerifiedDialogues') {
-        console.log('Playing postVerified audio for stage', currentStage);
         setTimeout(() => {
-          playPostVerifiedNarration(currentStage, dialogueIndex);
+          playPostVerifiedNarration(currentStage, 0);
         }, 300);
       } else if (dialogueState === 'postQuestion1Dialogues') {
-        console.log('Playing postQuestion1 audio for stage', currentStage);
         setTimeout(() => {
-          playPostQuestion1Narration(currentStage, dialogueIndex);
+          playPostQuestion1Narration(currentStage, 0);
         }, 300);
       } else if (dialogueState === 'postQuestion2Dialogues') {
-        console.log('Playing postQuestion2 audio for stage', currentStage);
         setTimeout(() => {
-          playPostQuestion2Narration(currentStage, dialogueIndex);
+          playPostQuestion2Narration(currentStage, 0);
         }, 300);
       }
     }
-  }, [audioEnabled, gameStarted, dialogueState, dialogueIndex, currentStage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [audioEnabled, gameStarted, dialogueState, currentStage]);
 
   // Control background music volume during narration
   useEffect(() => {
     if (isNarrationPlaying) {
-      adjustBackgroundMusicVolume(0.1); // Duck to 10% during narration
+      adjustBackgroundMusicVolume(0.05); // Duck to 5% during narration
     } else {
-      adjustBackgroundMusicVolume(0.3); // Return to 30% when narration stops
+      adjustBackgroundMusicVolume(0.15); // Return to 15% when narration stops
     }
   }, [isNarrationPlaying]);
 
@@ -831,13 +796,11 @@ export default function TayHoGame() {
         } else if (currentStage === 2) {
           setDialogueState('question1');
         } else if (currentStage === 3) {
-          setDialogueState('question1'); // Stage 3 now uses questions
+          setDialogueState('question1'); // Stage 3: Điện Sơn Trang
         } else if (currentStage === 4) {
-          setDialogueState('question1'); // Stage 4: Điện Sơn Trang
+          setDialogueState('question1'); // Stage 4: Lầu Cô - Lầu Cậu
         } else if (currentStage === 5) {
-          setDialogueState('question1'); // Stage 5: Lầu Cô - Lầu Cậu
-        } else if (currentStage === 6) {
-          // Stage 6: cứ đọc hết dialogues rồi → final
+          // Stage 5: cứ đọc hết dialogues rồi → final
           setDialogueState('final');
         }
       }
@@ -846,16 +809,10 @@ export default function TayHoGame() {
       if (dialogueIndex < stageData.postChoiceDialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
-        if (currentStage === 0) {
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
-        } else if (currentStage === 3) {
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
+        // After postChoiceDialogues → complete + countdown
+        setDialogueState('complete');
+        if (stageData.countdown > 0) {
+          startCountdown(stageData.countdown);
         }
       }
     }
@@ -872,37 +829,25 @@ export default function TayHoGame() {
     }
     else if (dialogueState === 'question1_feedback') {
       if (wrongChoiceIndex !== null) {
-        if (currentStage === 2) {
-          // Stage 2: sai cũng tiến lên postQuestion1Dialogues
-          setWrongChoiceIndex(null);
-          setDialogueState('postQuestion1Dialogues');
-          setDialogueIndex(0);
-        } else {
-          // Stage 1, 3, 4: sai → hỏi lại
-          setDialogueState('question1');
-          setWrongChoiceIndex(null);
-        }
+        // Sai → hỏi lại question1 ở tất cả stage
+        setDialogueState('question1');
+        setWrongChoiceIndex(null);
       } else {
         if (currentStage === 1) {
-          // Stage 1: trả lời đúng → vào complete + countdown ngay
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
-        } else if (currentStage === 2) {
+          // Stage 1: trả lời đúng → postQuestion1Dialogues (nội dung Sân Phủ)
           setDialogueState('postQuestion1Dialogues');
           setDialogueIndex(0);
-        } else if (currentStage === 3) {
-          // Stage 3: đúng → postVerifiedDialogues
+        } else if (currentStage === 2) {
+          // Stage 2 (Tam Tòa): đúng → postVerifiedDialogues
           setDialogueState('postVerifiedDialogues');
           setDialogueIndex(0);
-        } else if (currentStage === 4) {
-          // Stage 4 (Điện Sơn Trang): đúng câu 1 → preQuestion2Dialogues → question2
+        } else if (currentStage === 3) {
+          // Stage 3 (Điện Sơn Trang): đúng câu 1 → preQuestion2Dialogues → question2
           setDialogueState('preQuestion2Dialogues');
           setDialogueIndex(0);
           setVerified(false); // reset để câu hỏi 2 hiển thị choices
-        } else if (currentStage === 5) {
-          // Stage 5 (Lầu Cô - Lầu Cậu): đúng → postQuestion1Dialogues (hiện lời nhắn chọn bên)
+        } else if (currentStage === 4) {
+          // Stage 4 (Lầu Cô - Lầu Cậu): đúng → postQuestion1Dialogues (hiện lời nhắn chọn bên)
           setDialogueState('postQuestion1Dialogues');
           setDialogueIndex(0);
           setVerified(false);
@@ -913,25 +858,25 @@ export default function TayHoGame() {
       if (dialogueIndex < stageData.postVerifiedDialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
-        if (currentStage === 1) {
-          setDialogueState('question2');
-          setVerified(false);
-        } else if (currentStage === 3) {
-          // Stage 3: sau postVerifiedDialogues → question2
-          setDialogueState('question2');
-          setVerified(false);
-        }
+        // Sau postVerifiedDialogues → question2
+        setDialogueState('question2');
+        setVerified(false);
       }
     }
     else if (dialogueState === 'question2_feedback') {
       if (wrongChoiceIndex !== null) {
-        if (currentStage === 3) {
-          // Stage 3: sai cũng tiến lên postQuestion2Dialogues (không loop lại)
+        if (currentStage === 1) {
+          // Stage 1 (câu hỏi Sân Phủ): sai cũng tiến lên postQuestion2Dialogues
           setWrongChoiceIndex(null);
           setDialogueState('postQuestion2Dialogues');
           setDialogueIndex(0);
-        } else if (currentStage === 4) {
-          // Stage 4: sai cũng tiến lên postQuestion2Dialogues
+        } else if (currentStage === 2) {
+          // Stage 2: sai cũng tiến lên postQuestion2Dialogues (không loop lại)
+          setWrongChoiceIndex(null);
+          setDialogueState('postQuestion2Dialogues');
+          setDialogueIndex(0);
+        } else if (currentStage === 3) {
+          // Stage 3: sai cũng tiến lên postQuestion2Dialogues
           setWrongChoiceIndex(null);
           setDialogueState('postQuestion2Dialogues');
           setDialogueIndex(0);
@@ -948,14 +893,13 @@ export default function TayHoGame() {
       if (dialogueIndex < stageData.postQuestion1Dialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
-        if (currentStage === 2) {
-          // Stage 2: sau postQuestion1Dialogues → complete + countdown
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
-        } else if (currentStage === 5) {
-          // Stage 5: sau postQuestion1Dialogues → wishChoices
+        if (currentStage === 1) {
+          // Stage 1: sau postQuestion1Dialogues (Sân Phủ dialogues) → question2
+          setDialogueState('question2');
+          setDialogueIndex(0);
+          setVerified(false);
+        } else if (currentStage === 4) {
+          // Stage 4: sau postQuestion1Dialogues → wishChoices
           setDialogueState('wishChoices');
         }
       }
@@ -972,26 +916,10 @@ export default function TayHoGame() {
       if (dialogueIndex < stageData.postQuestion2Dialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
-        if (currentStage === 1) {
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
-        } else if (currentStage === 2) {
-          setDialogueState('question3');
-          setVerified(false);
-        } else if (currentStage === 3) {
-          // Stage 3: sau postQuestion2Dialogues → complete + countdown
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
-        } else if (currentStage === 4) {
-          // Stage 4 (Điện Sơn Trang): sau postQuestion2Dialogues → complete + countdown
-          setDialogueState('complete');
-          if (stageData.countdown > 0) {
-            startCountdown(stageData.countdown);
-          }
+        // Sau postQuestion2Dialogues → complete + countdown (mọi stage)
+        setDialogueState('complete');
+        if (stageData.countdown > 0) {
+          startCountdown(stageData.countdown);
         }
       }
     }
@@ -1260,12 +1188,12 @@ export default function TayHoGame() {
       <div className="absolute top-[52px] sm:top-[68px] left-0 w-full px-3 sm:px-5 z-20">
         <div className="flex justify-between text-[8px] sm:text-[9px] text-[#D4AF37]/80 font-ui mb-1 px-0.5">
           <span>HÀNH TRÌNH THỰC ĐỊA</span>
-          <span>CHẶNG {currentStage}/6</span>
+          <span>CHẶNG {currentStage}/5</span>
         </div>
         <div className="w-full h-1 bg-black/50 rounded-full overflow-hidden border border-[#D4AF37]/15">
           <div
             className="h-full bg-gradient-to-r from-[#D4AF37] to-[#FFB74D] rounded-full transition-all duration-500"
-            style={{ width: `${(currentStage / 6) * 100}%` }}
+            style={{ width: `${(currentStage / 5) * 100}%` }}
           />
         </div>
       </div>
