@@ -803,8 +803,18 @@ export default function TayHoGame() {
   // Quiz / choice option select handlers
   const handleChoiceSelect = (choice, idx) => {
     if (choice.correct) {
-      setVerified(true);
       setWrongChoiceIndex(null);
+      
+      if (currentStage === 3 && dialogueState === 'question1') {
+        setVerified(false);
+        setDialogueState('preQuestion2Dialogues');
+        setDialogueIndex(0);
+        playChime(true);
+        playAudioFile('/assets/audio/a14.mp3');
+        return;
+      }
+
+      setVerified(true);
       setCustomDialogue(choice.feedback);
 
       const feedbackStateName =
