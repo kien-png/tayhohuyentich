@@ -35,7 +35,7 @@ export default function DialogueBox({
       } else {
         clearInterval(interval);
       }
-    }, 35);
+    }, 50 );
 
     return () => clearInterval(interval);
   }, [dialogue]);

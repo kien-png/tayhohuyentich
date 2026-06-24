@@ -18,12 +18,7 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.7] opacity-60",
     dialogues: [
-      "Chào con.",
-      "Người ta thường nghĩ rằng muốn khám phá một vùng đất thì phải đi thật xa. Nhưng có những câu chuyện lại nằm ngay dưới bước chân mình.",
-      "Hôm nay, ta sẽ dẫn con đi qua những mảnh ký ức đang ngủ quên nơi này.",
-      "Mỗi điểm dừng là một câu chuyện. Mỗi câu chuyện là một manh mối.",
-      "Và chỉ khi ghép đủ chúng lại, con mới nhìn thấy bức tranh hoàn chỉnh.",
-      "Con đã sẵn sàng chưa?"
+      "Chào con. Người ta thường nghĩ rằng muốn khám phá một vùng đất thì phải đi thật xa. Nhưng có những câu chuyện lại nằm ngay dưới bước chân mình. Hôm nay, ta sẽ dẫn con đi qua những mảnh ký ức đang ngủ quên nơi này. Mỗi điểm dừng là một câu chuyện. Mỗi câu chuyện là một manh mối. Và chỉ khi ghép đủ chúng lại, con mới nhìn thấy bức tranh hoàn chỉnh. Con đã sẵn sàng chưa?"
     ],
     choices: [
       {
@@ -43,11 +38,7 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
     dialogues: [
-      "Muốn bước vào một nơi linh thiêng, trước tiên phải đi qua cánh cửa của sự quan sát.",
-      "Và cánh cửa đầu tiên đang ở ngay phía trước con.",
-      "Ta có những câu hỏi nhưng đáp án không nằm ở đây.",
-      "Hãy đi đến Tam Quan của phủ, đứng trước cổng và nhìn thật kỹ.",
-      "Trên Tam Quan có rất nhiều chi tiết mà người ta thường vô tình bỏ qua."
+      "Muốn bước vào một nơi linh thiêng, trước tiên phải đi qua cánh cửa của sự quan sát. Và cánh cửa đầu tiên đang ở ngay phía trước con. Ta có những câu hỏi nhưng đáp án không nằm ở đây. Hãy đi đến Tam Quan của phủ, đứng trước cổng và nhìn thật kỹ. Trên Tam Quan có rất nhiều chi tiết mà người ta thường vô tình bỏ qua."
     ],
     choices: [
       {
@@ -56,9 +47,7 @@ export const kichbanData = [
       }
     ],
     postChoiceDialogues: [
-      "Tốt lắm. Con đã bước những bước đầu tiên trên hành trình này.",
-      "Nhưng để vào được câu chuyện của Phủ Tây Hồ, con phải đi qua cánh cổng của ký ức.",
-      "Hãy ngẩng đầu nhìn về trước mắt, cho ta biết: Cổng Tam Quan có bao nhiêu lối đi?"
+      "Tốt lắm. Con đã bước những bước đầu tiên trên hành trình này. Nhưng để vào được câu chuyện của Phủ Tây Hồ, con phải đi qua cánh cổng của ký ức. Hãy ngẩng đầu nhìn về trước mắt, cho ta biết: Cổng Tam Quan có bao nhiêu lối đi?"
     ],
     question: {
       text: "Cổng Tam Quan có bao nhiêu lối đi?",
@@ -81,8 +70,7 @@ export const kichbanData = [
       ]
     },
     postQuestion1Dialogues: [
-      "Con hãy nhìn xuống dưới. Có một câu đối — hai bên trụ cổng.",
-      "Câu đối đó kể chuyện về một cuộc gặp gỡ 400 năm trước. Cuộc gặp giữa quan trạng và Công chúa Liễu Hạnh bên quán nước. Con có biết quan trạng tên gì không?"
+      "Con hãy nhìn xuống dưới. Có một câu đối — hai bên trụ cổng. Câu đối đó kể chuyện về một cuộc gặp gỡ 400 năm trước. Cuộc gặp giữa quan trạng và Công chúa Liễu Hạnh bên quán nước. Con có biết quan trạng tên gì không?"
     ],
     question2: {
       text: "Quan trạng trong câu chuyện tên gì?",
@@ -105,9 +93,7 @@ export const kichbanData = [
       ]
     },
     postQuestion2Dialogues: [
-      "Tốt rồi! Con đã tìm được manh mối đầu tiên.",
-      "Nhưng hành trình vẫn chưa hết đâu. Theo ta vào sân phủ nhé.",
-      "Ở đây còn giấu một bí mật thú vị về cách người xưa xây dựng ngôi phủ này. Hãy tìm Phủ chính."
+      "Tốt rồi! Con đã tìm được manh mối đầu tiên. Nhưng hành trình vẫn chưa hết đâu. Theo ta vào sân phủ nhé. Ở đây còn giấu một bí mật thú vị về cách người xưa xây dựng ngôi phủ này. Hãy tìm Phủ chính."
     ],
     buttonText: "ĐÃ ĐẾN PHỦ CHÍNH",
     countdown: 5
@@ -123,8 +109,7 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
     dialogues: [
-      "Trước mặt con có ngôi nhà 2 tầng nhỏ ở giữa sân gọi là Phủ chính, chia làm 3 nếp — Tiền tế, Trung đường, Hậu cung.",
-      "Hãy nhìn vào Tiền tế (lớp đầu) và cho ta biết có bao nhiêu cửa chính phía trước?"
+      "Trước mặt con có ngôi nhà 2 tầng nhỏ ở giữa sân gọi là Phủ chính, chia làm 3 nếp — Tiền tế, Trung đường, Hậu cung. Hãy nhìn vào Tiền tế (lớp đầu) và cho ta biết có bao nhiêu cửa chính phía trước?"
     ],
     question: {
       text: "Tiền tế có bao nhiêu cửa chính phía trước?",
@@ -132,7 +117,7 @@ export const kichbanData = [
         {
           text: "3 cửa",
           correct: true,
-          feedback: "Đúng rồi!"
+          feedback: ""
         },
         {
           text: "2 cửa",
@@ -147,8 +132,7 @@ export const kichbanData = [
       ]
     },
     postVerifiedDialogues: [
-      "Bây giờ hãy nhìn quanh sân phủ xem nào. Con đang đứng trong sân phủ. Phía trước là ba nếp nhà nối tiếp nhau. Người xưa gọi là Tiền tế, Trung đường và Hậu cung.",
-      "Ở hành trình trước, con đã được cung cấp thông tin về kiến trúc của không gian này, vậy ta sẽ kiểm tra lại một chút: Trong ba lớp ấy, lớp nào thấp nhất?"
+      "Bây giờ hãy nhìn quanh sân phủ xem nào. Con đang đứng trong sân phủ. Phía trước là ba nếp nhà nối tiếp nhau. Người xưa gọi là Tiền tế, Trung đường và Hậu cung. Ở hành trình trước, con đã được cung cấp thông tin về kiến trúc của không gian này, vậy ta sẽ kiểm tra lại một chút: Trong ba lớp ấy, lớp nào thấp nhất?"
     ],
     question2: {
       text: "Trong ba lớp ấy, lớp nào thấp nhất?",
@@ -171,7 +155,7 @@ export const kichbanData = [
       ]
     },
     postQuestion2Dialogues: [
-      "Có một điện thờ đặc biệt đang chờ con khám phá. Nào, chúng ta tiếp tục khám phá nhé. Ta còn một câu hỏi nữa dành cho con đây. Hãy đến Điện Sơn Trang."
+      "Có một điện thờ đặc biệt đang chờ cháu khám phá. Nào, chúng ta tiếp tục khám phá nhé. Ta còn một câu hỏi nữa dành cho con đây. Hãy đến Điện Sơn Trang."
     ],
 
     buttonText: "ĐÃ ĐẾN ĐIỆN SƠN TRANG",
@@ -206,14 +190,12 @@ export const kichbanData = [
         {
           text: "Vàng",
           correct: true,
-          feedback: "Đúng vậy! Tượng hổ ở ban thờ Sơn Trang thường được sơn màu vàng."
+          feedback: ""
         }
       ]
     },
     preQuestion2Dialogues: [
-      "Khác với những ban thờ khác trong phủ, nơi này mang màu sắc của núi rừng nhiều hơn.",
-      "Từ các vị Chúa Sơn Trang, các Cô Sơn Trang cho đến những lễ vật dâng cúng, tất cả đều gợi nhớ đến thế giới của cây cối, khe suối và đại ngàn.",
-      "Điều đó không phải ngẫu nhiên. Hãy cho ta biết vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?"
+      "Khác với những ban thờ khác trong phủ, nơi này mang màu sắc của núi rừng nhiều hơn. Từ các vị Chúa Sơn Trang, các Cô Sơn Trang cho đến những lễ vật dâng cúng, tất cả đều gợi nhớ đến thế giới của cây cối, khe suối và đại ngàn. Điều đó không phải ngẫu nhiên. Hãy cho ta biết vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?"
     ],
     question2: {
       text: "Vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?",
@@ -260,7 +242,7 @@ export const kichbanData = [
         {
           text: "Một đôi câu đối chữ Hán",
           correct: true,
-          feedback: "Bây giờ con chọn một bên. Lầu Cô hay Lầu Cậu. Nếu điều đó về tình cảm — đứng ở Lầu Cô. Nếu điều đó về công việc — đứng ở Lầu Cậu. Hãy nhắm mắt lại, con nghĩ về một điều mà con mong cầu — một điều con chưa nói được với ai. Chỉ nghĩ trong đầu. Cháu chọn bên nào?"
+          feedback: ""
         },
         {
           text: "Hai bức tranh phong cảnh",
@@ -275,7 +257,7 @@ export const kichbanData = [
       ]
     },
     postQuestion1Dialogues: [
-      "Cháu chọn bên nào?"
+      "Bây giờ con chọn một bên. Lầu Cô hay Lầu Cậu. Nếu điều đó về tình cảm - đứng ở Lầu Cô. Nếu điều đó về công việc - đứng ở Lầu Cậu. Hãy nhắm mắt lại, con nghĩ về một điều mà con mong cầu — một điều con chưa nói được với ai. Chỉ nghĩ trong đầu."
     ],
     wishChoices: [
       {
@@ -304,10 +286,8 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
     dialogues: [
-      "Con đã hoàn thành hành trình rồi. Mỗi nơi con đi qua đều là một mảnh ký ức. Và giờ đây, những mảnh ký ức ấy đã ghép lại thành một câu chuyện hoàn chỉnh.",
-      "Phủ Tây Hồ không chỉ là một điểm đến để dâng hương. Đó còn là nơi lưu giữ lịch sử, tín ngưỡng và những câu chuyện đã được truyền từ thế hệ này sang thế hệ khác.",
-      "Khi rời khỏi nơi đây, mong rằng con sẽ mang theo không chỉ những bức ảnh đẹp...",
-      "Mà còn cả những câu chuyện đang sống dưới mái phủ này."
+      "Con đã hoàn thành hành trình rồi. Mỗi nơi con đi qua đều là một mảnh ký ức. Và giờ đây, những mảnh ký ức ấy đã ghép lại thành một câu chuyện hoàn chỉnh. Phủ Tây Hồ không chỉ là một điểm đến để dâng hương. Đó còn là nơi lưu giữ lịch sử, tín ngưỡng và những câu chuyện đã được truyền từ thế hệ này sang thế hệ khác. Khi rời khỏi nơi đây, mong rằng con sẽ mang theo không chỉ những bức ảnh đẹp... Mà còn cả những câu chuyện đang sống dưới mái phủ này.",
+      "Hành trình kết thúc. Nhưng việc gìn giữ di sản thì không. Mỗi câu chuyện được lắng nghe. Mỗi giá trị được trân trọng. Mỗi di sản được khám phá. Đều là một cách để quá khứ tiếp tục sống trong hiện tại."
     ]
   }
 ];
