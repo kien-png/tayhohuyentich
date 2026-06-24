@@ -25,7 +25,7 @@ export default function TayHoGame() {
   const [bgTransitioning, setBgTransitioning] = useState(false);
 
   // Audio states
-  const [audioEnabled, setAudioEnabled] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(true);
   const audioCtxRef = useRef(null);
   const synthIntervalRef = useRef(null);
   const narratorAudioRef = useRef(null);
@@ -668,7 +668,24 @@ export default function TayHoGame() {
   };
 
   useEffect(() => {
+    // Auto-start audio on mount (user can turn off manually)
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume();
+      }
+    } catch (e) {
+      console.error('Web Audio init failed', e);
+    }
+    // Play background music after a short delay to allow browser autoplay
+    const timer = setTimeout(() => {
+      playBackgroundMusic();
+    }, 200);
+
     return () => {
+      clearTimeout(timer);
       if (synthIntervalRef.current) {
         clearInterval(synthIntervalRef.current);
       }
@@ -688,46 +705,51 @@ export default function TayHoGame() {
   // Auto-play narration when dialogue state or stage changes
   // NOTE: dialogueIndex is intentionally NOT in deps — audio plays once per state entry,
   // not on every click-next within the same state.
+  // NOTE: showDialogueBox is in deps so audio waits for the chat box to appear (e.g. stage 0 has 3s animation delay).
   useEffect(() => {
-    if (audioEnabled && gameStarted) {
-      console.log(`Audio trigger: Stage ${currentStage}, DialogueState: ${dialogueState}`);
-      
-      if (dialogueState === 'dialogues') {
-        setTimeout(() => {
-          playNarration(currentStage, 0);
-        }, 300);
-      } else if (dialogueState === 'postChoiceDialogues') {
-        setTimeout(() => {
-          playPostChoiceNarration(currentStage, 0);
-        }, 300);
-      } else if (dialogueState === 'question1') {
-        setTimeout(() => {
-          playQuestionNarration(currentStage, 'question1');
-        }, 300);
-      } else if (dialogueState === 'question2') {
-        setTimeout(() => {
-          playQuestionNarration(currentStage, 'question2');
-        }, 300);
-      } else if (dialogueState === 'question3') {
-        setTimeout(() => {
-          playQuestionNarration(currentStage, 'question3');
-        }, 300);
-      } else if (dialogueState === 'postVerifiedDialogues') {
-        setTimeout(() => {
-          playPostVerifiedNarration(currentStage, 0);
-        }, 300);
-      } else if (dialogueState === 'postQuestion1Dialogues') {
-        setTimeout(() => {
-          playPostQuestion1Narration(currentStage, 0);
-        }, 300);
-      } else if (dialogueState === 'postQuestion2Dialogues') {
-        setTimeout(() => {
-          playPostQuestion2Narration(currentStage, 0);
-        }, 300);
-      }
+    // Wait until the dialogue box is actually visible before playing audio
+    if (!audioEnabled || !gameStarted || !showDialogueBox) return;
+
+    console.log(`Audio trigger: Stage ${currentStage}, DialogueState: ${dialogueState}`);
+
+    // Only auto-trigger audio for states that represent a new scene/section entry.
+    // Feedback states (question1_feedback, question2_feedback, etc.) are NOT included here
+    // because their audio is already triggered directly inside handleChoiceSelect / handleOptionSelect.
+    if (dialogueState === 'dialogues') {
+      setTimeout(() => {
+        playNarration(currentStage, 0);
+      }, 300);
+    } else if (dialogueState === 'postChoiceDialogues') {
+      setTimeout(() => {
+        playPostChoiceNarration(currentStage, 0);
+      }, 300);
+    } else if (dialogueState === 'question1') {
+      setTimeout(() => {
+        playQuestionNarration(currentStage, 'question1');
+      }, 300);
+    } else if (dialogueState === 'question2') {
+      setTimeout(() => {
+        playQuestionNarration(currentStage, 'question2');
+      }, 300);
+    } else if (dialogueState === 'question3') {
+      setTimeout(() => {
+        playQuestionNarration(currentStage, 'question3');
+      }, 300);
+    } else if (dialogueState === 'postVerifiedDialogues') {
+      setTimeout(() => {
+        playPostVerifiedNarration(currentStage, 0);
+      }, 300);
+    } else if (dialogueState === 'postQuestion1Dialogues') {
+      setTimeout(() => {
+        playPostQuestion1Narration(currentStage, 0);
+      }, 300);
+    } else if (dialogueState === 'postQuestion2Dialogues') {
+      setTimeout(() => {
+        playPostQuestion2Narration(currentStage, 0);
+      }, 300);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audioEnabled, gameStarted, dialogueState, currentStage]);
+  }, [audioEnabled, gameStarted, showDialogueBox, dialogueState, currentStage]);
 
   // Control background music volume during narration
   useEffect(() => {
@@ -1046,6 +1068,9 @@ export default function TayHoGame() {
   };
 
   const resetGame = () => {
+    // Stop all audio immediately when going back
+    stopNarration();
+    stopBackgroundMusic();
     setGameStarted(false);
     setCurrentStage(0);
     setDialogueState('dialogues');
