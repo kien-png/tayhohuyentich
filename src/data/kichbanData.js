@@ -219,8 +219,13 @@ export const kichbanData = [
         }
       ]
     },
+    preQuestion2Dialogues: [
+      "Khác với những ban thờ khác trong phủ, nơi này mang màu sắc của núi rừng nhiều hơn.",
+      "Từ các vị Chúa Sơn Trang, các Cô Sơn Trang cho đến những lễ vật dâng cúng, tất cả đều gợi nhớ đến thế giới của cây cối, khe suối và đại ngàn.",
+      "Điều đó không phải ngẫu nhiên. Hãy cho ta biết vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?"
+    ],
     question2: {
-      text: "Khác với những ban thờ khác trong phủ, nơi này mang màu sắc của núi rừng nhiều hơn. Từ các vị Chúa Sơn Trang, các Cô Sơn Trang cho đến những lễ vật dâng cúng, tất cả đều gợi nhớ đến thế giới của cây cối, khe suối và đại ngàn. Điều đó không phải ngẫu nhiên. Hãy cho ta biết vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?",
+      text: "Vì sao người Việt xưa lại lập riêng một Điện Sơn Trang trong phủ?",
       choices: [
         {
           text: "Để thờ các vị thần núi rừng",

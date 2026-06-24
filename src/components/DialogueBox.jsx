@@ -47,97 +47,96 @@ export default function DialogueBox({
   return (
     <div
       onClick={isDialogueOnly ? onNext : undefined}
-      className={`relative w-full max-w-4xl bg-[#1a0f0d]/90 border border-[#D4AF37]/45 rounded-2xl p-4 sm:p-6 md:p-8 pb-8 sm:pb-10 shadow-[0_15px_40px_rgba(0,0,0,0.95)] backdrop-blur-md transition-all duration-300 z-10 mx-2 sm:mx-0 ${isDialogueOnly ? 'cursor-pointer hover:border-[#D4AF37]/80' : ''
+      className={`relative w-full max-w-4xl bg-[#1a0f0d]/92 border border-[#D4AF37]/45 rounded-xl sm:rounded-2xl p-3 sm:p-5 md:p-8 pb-7 sm:pb-9 shadow-[0_10px_30px_rgba(0,0,0,0.95)] backdrop-blur-md transition-all duration-300 z-10 mx-1 sm:mx-0 ${isDialogueOnly ? 'cursor-pointer active:border-[#D4AF37]/80' : ''
         }`}
     >
-      {/* Speaker Name Badge (Visual Novel style) */}
+      {/* Speaker Name Badge */}
       {activeSpeaker && (
-        <div className="absolute -top-3 sm:-top-4 right-4 sm:right-6 md:right-10 bg-[#D4AF37] text-[#1a0f0d] px-4 sm:px-6 py-1 sm:py-1.5 rounded-full text-xs font-serif font-extrabold uppercase tracking-widest shadow-lg border border-white/20 select-none">
+        <div className="absolute -top-3 sm:-top-3.5 right-3 sm:right-6 md:right-10 bg-[#D4AF37] text-[#1a0f0d] px-3 sm:px-5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-serif font-extrabold uppercase tracking-widest shadow-lg border border-white/20 select-none">
           {activeSpeaker}
         </div>
       )}
 
-      {/* Main Dialogue Flex Row */}
-      <div className="mt-2 flex flex-col md:flex-row md:items-start justify-between gap-6">
-        {/* Left side: Role Subtitle & Main Dialogue Text + Choices */}
-        <div className="flex-grow text-left">
-          {speakerRole && (
-            <span className="text-[11px] sm:text-xs font-ui tracking-widest text-[#FFB74D] uppercase font-semibold block mb-3 select-none opacity-90">
-              {speakerRole}
-            </span>
-          )}
+      {/* Main Content */}
+      <div className="mt-1 sm:mt-2 flex flex-col gap-2">
+        {/* Role subtitle */}
+        {speakerRole && (
+          <span className="text-[10px] sm:text-xs font-ui tracking-widest text-[#FFB74D] uppercase font-semibold select-none opacity-90">
+            {speakerRole}
+          </span>
+        )}
 
-          {displayedText && (
-            <div className="min-h-[40px] mb-3">
-              <p className="text-slate-200 text-base sm:text-lg md:text-xl leading-relaxed font-dialogue text-justify drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] tracking-wide">
-                {displayedText}
-              </p>
-            </div>
-          )}
+        {/* Dialogue text */}
+        {displayedText && (
+          <div className="min-h-[32px] sm:min-h-[40px]">
+            <p className="text-slate-100 text-sm sm:text-base md:text-lg leading-relaxed font-dialogue text-justify drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] tracking-wide">
+              {displayedText}
+            </p>
+          </div>
+        )}
 
-          {/* Interactive Options - Quiz Questions (Chặng 1, 2) */}
-          {question && !verified && (
-            <div className="mt-6 space-y-2.5 animate-fade-in">
-              <p className="text-sm sm:text-base text-slate-300 font-dialogue italic mb-3 opacity-95">
-                {question.text}
-              </p>
-              <div className="grid grid-cols-1 gap-2">
-                {question.choices.map((choice, idx) => {
-                  const isWrong = wrongChoiceIndex === idx;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onChoiceSelect(choice, idx);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg border text-sm sm:text-base font-dialogue transition-all duration-300 cursor-pointer ${isWrong
-                        ? 'bg-red-950/50 border-red-500 text-red-200 animate-pulse'
-                        : 'bg-black/35 border-[#D4AF37]/25 text-slate-200 hover:border-[#D4AF37]/80 hover:bg-[#D4AF37]/10'
-                        }`}
-                    >
-                      <span className="font-serif text-[#D4AF37] mr-2">{String.fromCharCode(65 + idx)}.</span>
-                      {choice.text}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Branching Dialog Choice Options (Chặng 3, 4) */}
-          {choices && (
-            <div className="mt-6 space-y-2.5 animate-fade-in">
-              <div className="grid grid-cols-1 gap-2">
-                {choices.map((choice, idx) => (
+        {/* Quiz Questions */}
+        {question && !verified && (
+          <div className="mt-2 sm:mt-4 space-y-1.5 sm:space-y-2.5 animate-fade-in">
+            <p className="text-xs sm:text-sm text-[#FFB74D] font-dialogue italic mb-1.5 sm:mb-3 opacity-95 leading-relaxed">
+              {question.text}
+            </p>
+            <div className="grid grid-cols-1 gap-1.5 sm:gap-2">
+              {question.choices.map((choice, idx) => {
+                const isWrong = wrongChoiceIndex === idx;
+                return (
                   <button
                     key={idx}
                     onClick={(e) => {
                       e.stopPropagation();
-                      onOptionSelect(choice);
+                      onChoiceSelect(choice, idx);
                     }}
-                    className="w-full text-left px-4 py-3 rounded-lg border bg-black/35 border-[#D4AF37]/25 text-slate-200 hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 text-sm sm:text-base font-dialogue transition-all duration-300 cursor-pointer"
+                    className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border text-sm sm:text-base font-dialogue transition-all duration-300 cursor-pointer active:scale-[0.98] ${isWrong
+                      ? 'bg-red-950/50 border-red-500 text-red-200 animate-pulse'
+                      : 'bg-black/35 border-[#D4AF37]/25 text-slate-200 hover:border-[#D4AF37]/80 hover:bg-[#D4AF37]/10'
+                      }`}
                   >
-                    <span className="font-serif text-[#D4AF37] mr-2">{idx + 1}.</span>
+                    <span className="font-serif text-[#D4AF37] mr-1.5 sm:mr-2">{String.fromCharCode(65 + idx)}.</span>
                     {choice.text}
                   </button>
-                ))}
-              </div>
+                );
+              })}
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* Branching Dialog Choices */}
+        {choices && (
+          <div className="mt-2 sm:mt-4 space-y-1.5 sm:space-y-2.5 animate-fade-in">
+            <div className="grid grid-cols-1 gap-1.5 sm:gap-2">
+              {choices.map((choice, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOptionSelect(choice);
+                  }}
+                  className="w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border bg-black/35 border-[#D4AF37]/25 text-slate-200 hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 text-sm sm:text-base font-dialogue transition-all duration-300 cursor-pointer active:scale-[0.98]"
+                >
+                  <span className="font-serif text-[#D4AF37] mr-1.5 sm:mr-2">{idx + 1}.</span>
+                  {choice.text}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Continue indicator for dialogue only */}
+      {/* Continue indicator */}
       {isDialogueOnly && (
-        <div className="absolute bottom-3.5 right-6 flex items-center gap-2 text-[10px] font-ui font-bold text-[#D4AF37] tracking-[0.15em] uppercase select-none pointer-events-none">
+        <div className="absolute bottom-2 sm:bottom-3.5 right-3 sm:right-6 flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] font-ui font-bold text-[#D4AF37] tracking-[0.1em] sm:tracking-[0.15em] uppercase select-none pointer-events-none">
           {isNarrationPlaying && (
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1 sm:gap-1.5">
               <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-pulse"></div>
-              <span className="text-[9px] opacity-80">ĐANG PHÁT</span>
+              <span className="text-[8px] sm:text-[9px] opacity-80">ĐANG PHÁT</span>
             </div>
           )}
-          <span className="animate-pulse opacity-90">Bấm để tiếp tục &raquo;</span>
+          <span className="animate-pulse opacity-90">Bấm để tiếp &raquo;</span>
         </div>
       )}
     </div>

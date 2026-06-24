@@ -50,6 +50,38 @@
   background: #FFB74D;
 }
 
+/* Mobile baseline fixes */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  /* Full viewport height on mobile, accounting for browser chrome */
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Prevent accidental zoom on double-tap for iOS */
+button, a {
+  touch-action: manipulation;
+}
+
+/* Prevent text selection during tap */
+.select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 /* Custom premium animations & visual effects */
 @keyframes float {
   0%, 100% {
