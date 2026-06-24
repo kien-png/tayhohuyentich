@@ -87,7 +87,7 @@ export default function TayHoGame() {
       }
 
       console.log('Attempting to play background music...');
-      const audio = new Audio('/src/assets/audio/background-music.mp3');
+      const audio = new Audio('/assets/audio/background-music.mp3');
       audio.loop = true;
       audio.volume = 0.3;
       
@@ -190,40 +190,40 @@ export default function TayHoGame() {
       
       // Stage 0 - file a1 covers dialogue 0 to 5 (entire conversation)
       if (stageIndex === 0 && dialogueIndex >= 0 && dialogueIndex <= 5) {
-        audioPath = `/src/assets/audio/a1.mp3`;
+        audioPath = `/assets/audio/a1.mp3`;
       }
       // Stage 1 - file a3 covers dialogue 0 to 2 + question
       else if (stageIndex === 1 && dialogueIndex >= 0 && dialogueIndex <= 2) {
-        audioPath = `/src/assets/audio/a3.mp3`;
+        audioPath = `/assets/audio/a3.mp3`;
       }
       // Stage 2 - file a4 covers dialogue 0 to 1
       else if (stageIndex === 2 && dialogueIndex >= 0 && dialogueIndex <= 1) {
-        audioPath = `/src/assets/audio/a4.mp3`;
+        audioPath = `/assets/audio/a4.mp3`;
       }
       // Stage 3 - file a8 covers dialogue 0 to 1
       else if (stageIndex === 3 && dialogueIndex >= 0 && dialogueIndex <= 1) {
-        audioPath = `/src/assets/audio/a8.mp3`;
+        audioPath = `/assets/audio/a8.mp3`;
       }
       // Stage 4 - file a13 covers dialogue 0
       else if (stageIndex === 4 && dialogueIndex === 0) {
-        audioPath = `/src/assets/audio/a13.mp3`;
+        audioPath = `/assets/audio/a13.mp3`;
       }
       // Stage 5 - file a18 covers dialogue 0
       else if (stageIndex === 5 && dialogueIndex === 0) {
-        audioPath = `/src/assets/audio/a18.mp3`;
+        audioPath = `/assets/audio/a18.mp3`;
       }
       // Stage 6 - file a21 covers dialogue 0, file a22 covers dialogue 1
       else if (stageIndex === 6) {
         if (dialogueIndex === 0) {
-          audioPath = `/src/assets/audio/a21.mp3`;
+          audioPath = `/assets/audio/a21.mp3`;
         } else if (dialogueIndex === 1) {
-          audioPath = `/src/assets/audio/a22.mp3`;
+          audioPath = `/assets/audio/a22.mp3`;
         }
       }
       
       // If no specific audio file, try default naming
       if (!audioPath) {
-        audioPath = `/src/assets/audio/stage${stageIndex}-dialogue${dialogueIndex}.mp3`;
+        audioPath = `/assets/audio/stage${stageIndex}-dialogue${dialogueIndex}.mp3`;
       }
 
       // Check if we're already playing the same audio file
@@ -266,36 +266,36 @@ export default function TayHoGame() {
       
       // Stage 1 - question is part of a3 file
       if (stageIndex === 1) {
-        audioPath = `/src/assets/audio/a3.mp3`;
+        audioPath = `/assets/audio/a3.mp3`;
       }
       // Stage 2 - question is part of a4 file
       else if (stageIndex === 2) {
-        audioPath = `/src/assets/audio/a4.mp3`;
+        audioPath = `/assets/audio/a4.mp3`;
       }
       // Stage 3 - different questions
       else if (stageIndex === 3) {
         if (questionType === 'question1') {
-          audioPath = `/src/assets/audio/a8.mp3`;
+          audioPath = `/assets/audio/a8.mp3`;
         } else if (questionType === 'question2') {
-          audioPath = `/src/assets/audio/a9.mp3`;
+          audioPath = `/assets/audio/a9.mp3`;
         }
       }
       // Stage 4 - different questions  
       else if (stageIndex === 4) {
         if (questionType === 'question1') {
-          audioPath = `/src/assets/audio/a13.mp3`;
+          audioPath = `/assets/audio/a13.mp3`;
         } else if (questionType === 'question2') {
-          audioPath = `/src/assets/audio/a14.mp3`;
+          audioPath = `/assets/audio/a14.mp3`;
         }
       }
       // Stage 5 - question is part of a18 file
       else if (stageIndex === 5) {
-        audioPath = `/src/assets/audio/a18.mp3`;
+        audioPath = `/assets/audio/a18.mp3`;
       }
       
       // If no specific audio file, try default naming
       if (!audioPath) {
-        audioPath = `/src/assets/audio/stage${stageIndex}-question.mp3`;
+        audioPath = `/assets/audio/stage${stageIndex}-question.mp3`;
       }
 
       // Check if we're already playing the same audio file
@@ -339,34 +339,34 @@ export default function TayHoGame() {
       // Stage 2 feedback
       if (stageIndex === 2) {
         if (isCorrect) {
-          audioPath = `/src/assets/audio/a6.mp3`; // Correct answer feedback
+          audioPath = `/assets/audio/a6.mp3`; // Correct answer feedback
         } else {
-          audioPath = `/src/assets/audio/a5.mp3`; // Wrong answer feedback
+          audioPath = `/assets/audio/a5.mp3`; // Wrong answer feedback
         }
       }
       // Stage 3 feedback
       else if (stageIndex === 3 && questionType === 'question2') {
         if (isCorrect) {
-          audioPath = `/src/assets/audio/a11.mp3`; // Correct answer feedback
+          audioPath = `/assets/audio/a11.mp3`; // Correct answer feedback
         } else {
-          audioPath = `/src/assets/audio/a10.mp3`; // Wrong answer feedback
+          audioPath = `/assets/audio/a10.mp3`; // Wrong answer feedback
         }
       }
       // Stage 4 feedback
       else if (stageIndex === 4) {
         if (questionType === 'question1' && isCorrect) {
-          audioPath = `/src/assets/audio/a14.mp3`; // Stage 4 question1 correct leads to question2
+          audioPath = `/assets/audio/a14.mp3`; // Stage 4 question1 correct leads to question2
         } else if (questionType === 'question2') {
           if (isCorrect) {
-            audioPath = `/src/assets/audio/a16.mp3`; // Correct answer feedback
+            audioPath = `/assets/audio/a16.mp3`; // Correct answer feedback
           } else {
-            audioPath = `/src/assets/audio/a15.mp3`; // Wrong answer feedback
+            audioPath = `/assets/audio/a15.mp3`; // Wrong answer feedback
           }
         }
       }
       // Stage 5 feedback
       else if (stageIndex === 5 && questionType === 'question1' && isCorrect) {
-        audioPath = `/src/assets/audio/a19.mp3`; // Stage 5 question1 correct feedback + postQuestion1
+        audioPath = `/assets/audio/a19.mp3`; // Stage 5 question1 correct feedback + postQuestion1
       }
       
       // If no specific audio file, skip
@@ -411,7 +411,7 @@ export default function TayHoGame() {
       
       // Stage 3 postVerifiedDialogues - file a9
       if (stageIndex === 3) {
-        audioPath = `/src/assets/audio/a9.mp3`;
+        audioPath = `/assets/audio/a9.mp3`;
       }
       
       if (!audioPath) {
@@ -459,11 +459,11 @@ export default function TayHoGame() {
       
       // Stage 2 postQuestion1Dialogues - file a7
       if (stageIndex === 2) {
-        audioPath = `/src/assets/audio/a7.mp3`;
+        audioPath = `/assets/audio/a7.mp3`;
       }
       // Stage 5 postQuestion1Dialogues - part of a19
       else if (stageIndex === 5) {
-        audioPath = `/src/assets/audio/a19.mp3`;
+        audioPath = `/assets/audio/a19.mp3`;
       }
       
       if (!audioPath) {
@@ -511,11 +511,11 @@ export default function TayHoGame() {
       
       // Stage 3 postQuestion2Dialogues - file a12
       if (stageIndex === 3) {
-        audioPath = `/src/assets/audio/a12.mp3`;
+        audioPath = `/assets/audio/a12.mp3`;
       }
       // Stage 4 postQuestion2Dialogues - file a17
       else if (stageIndex === 4) {
-        audioPath = `/src/assets/audio/a17.mp3`;
+        audioPath = `/assets/audio/a17.mp3`;
       }
       
       if (!audioPath) {
@@ -563,7 +563,7 @@ export default function TayHoGame() {
       
       // Stage 5 wish feedback - file a20
       if (stageIndex === 5) {
-        audioPath = `/src/assets/audio/a20.mp3`;
+        audioPath = `/assets/audio/a20.mp3`;
       }
       
       if (!audioPath) {
@@ -606,12 +606,12 @@ export default function TayHoGame() {
       
       // Stage 0 postChoiceDialogues - file a2 covers all postChoice dialogues
       if (stageIndex === 0) {
-        audioPath = `/src/assets/audio/a2.mp3`;
+        audioPath = `/assets/audio/a2.mp3`;
       }
       
       // If no specific audio file, try default naming
       if (!audioPath) {
-        audioPath = `/src/assets/audio/stage${stageIndex}-postchoice${dialogueIndex}.mp3`;
+        audioPath = `/assets/audio/stage${stageIndex}-postchoice${dialogueIndex}.mp3`;
       }
 
       // Check if we're already playing the same audio file

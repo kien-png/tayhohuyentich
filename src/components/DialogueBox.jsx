@@ -47,12 +47,12 @@ export default function DialogueBox({
   return (
     <div
       onClick={isDialogueOnly ? onNext : undefined}
-      className={`relative w-full max-w-4xl bg-[#1a0f0d]/90 border border-[#D4AF37]/45 rounded-2xl p-6 sm:p-8 pb-10 shadow-[0_15px_40px_rgba(0,0,0,0.95)] backdrop-blur-md transition-all duration-300 z-10 ${isDialogueOnly ? 'cursor-pointer hover:border-[#D4AF37]/80' : ''
+      className={`relative w-full max-w-4xl bg-[#1a0f0d]/90 border border-[#D4AF37]/45 rounded-2xl p-4 sm:p-6 md:p-8 pb-8 sm:pb-10 shadow-[0_15px_40px_rgba(0,0,0,0.95)] backdrop-blur-md transition-all duration-300 z-10 mx-2 sm:mx-0 ${isDialogueOnly ? 'cursor-pointer hover:border-[#D4AF37]/80' : ''
         }`}
     >
       {/* Speaker Name Badge (Visual Novel style) */}
       {activeSpeaker && (
-        <div className="absolute -top-4 right-6 md:right-10 bg-[#D4AF37] text-[#1a0f0d] px-6 py-1.5 rounded-full text-xs font-serif font-extrabold uppercase tracking-widest shadow-lg border border-white/20 select-none">
+        <div className="absolute -top-3 sm:-top-4 right-4 sm:right-6 md:right-10 bg-[#D4AF37] text-[#1a0f0d] px-4 sm:px-6 py-1 sm:py-1.5 rounded-full text-xs font-serif font-extrabold uppercase tracking-widest shadow-lg border border-white/20 select-none">
           {activeSpeaker}
         </div>
       )}

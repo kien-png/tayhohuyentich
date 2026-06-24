@@ -1,0 +1,45 @@
+# Thư mục chứa file audio
+# 
+# File audio hiện tại (tổng cộng 22 files):
+# 
+# STAGE 0:
+# a1.mp3 - Từ "Chào con" đến "Con đã sẵn sàng chưa" (Stage 0 dialogues 0-5)
+# a2.mp3 - Từ "Muốn bước vào một nơi linh thiêng" đến "ta thường vô tình bỏ qua" (Stage 0 postChoiceDialogues 0-4)
+# 
+# STAGE 1:
+# a3.mp3 - Từ "Tốt lắm" đến "Cổng Tam Quan có bao nhiêu lối đi?" (Stage 1 dialogues 0-2 + question1)
+# 
+# STAGE 2:
+# a4.mp3 - Từ "Con hãy nhìn xuống dưới" đến "Con có biết quan trạng tên gì không?" (Stage 2 dialogues 0-1 + question1)
+# a5.mp3 - Phản hồi câu trả lời SAI của Stage 2 ("Đó là Phùng Khắc Khoan. Một vị trạng nguyên nổi tiếng...")
+# a6.mp3 - Phản hồi câu trả lời ĐÚNG của Stage 2 ("Đúng rồi. Đó là Phùng Khắc Khoan. Người ta kể rằng...")
+# a7.mp3 - Từ "Tốt rồi!" đến "Hãy tìm ban thờ Tam Tòa Thánh Mẫu" (Stage 2 postQuestion1Dialogues)
+# 
+# STAGE 3:
+# a8.mp3 - Từ "Trước mặt con có ngôi nhà 2 tầng" đến "cho ta biết có bao nhiêu cửa chính phía trước?" (Stage 3 dialogues + question1)
+# a9.mp3 - Từ "Bây giờ hãy nhìn quanh sân phủ xem nào" đến "Trong ba lớp ấy, lớp nào thấp nhất?" (Stage 3 postVerifiedDialogues + question2)
+# a10.mp3 - Phản hồi câu trả lời SAI của Stage 3 question2 ("Đáp án là Hậu cung. Nhiều người cũng nghĩ như con...")
+# a11.mp3 - Phản hồi câu trả lời ĐÚNG của Stage 3 question2 ("Chính xác! Nhiều người thường nghĩ...")
+# a12.mp3 - Từ "Có một điện thờ đặc biệt" đến "Hãy đến Điện Sơn Trang" (Stage 3 postQuestion2Dialogues)
+# 
+# STAGE 4:
+# a13.mp3 - Từ "Hành trình của chúng ta sẽ tiếp tục" đến "Tượng hổ to nhất ở chính giữa có màu gì?" (Stage 4 dialogues + question1)
+# a14.mp3 - Phản hồi câu trả lời ĐÚNG Stage 4 question1 + question2 ("Khác với những ban thờ khác trong phủ...")
+# a15.mp3 - Phản hồi câu trả lời SAI của Stage 4 question2 ("Đáp án là thờ các vị thần núi rừng...")
+# a16.mp3 - Phản hồi câu trả lời ĐÚNG của Stage 4 question2 ("Chính xác! Đáp án là thờ các vị thần núi rừng...")
+# a17.mp3 - Từ "Hành trình này vẫn còn" đến "Nào, cùng ta tìm hiểu tiếp nhé" (Stage 4 postQuestion2Dialogues)
+# 
+# STAGE 5:
+# a18.mp3 - Từ "Trước mặt con là Lầu Cô" đến "Cho ta biết hai bên lầu có gì?" (Stage 5 dialogues + question1)
+# a19.mp3 - Từ "Bây giờ con chọn một bên" đến "Chỉ nghĩ trong đầu" (Stage 5 question1_feedback + postQuestion1Dialogues)
+# a20.mp3 - Từ "Con đã đặt câu hỏi của con xuống đây" đến "Ta sẽ đợi con ở đó" (Stage 5 wish_feedback)
+# 
+# STAGE 6:
+# a21.mp3 - Từ "Con đã hoàn thành hành trình rồi" đến "Mà còn cả những câu chuyện đang sống dưới mái phủ này" (Stage 6 dialogue 0)
+# a22.mp3 - Từ "Hành trình kết thúc" đến "Cảm ơn con đã đồng hành cùng Phủ Tây Hồ" (Stage 6 dialogue 1)
+# 
+# Cách đặt tên file audio khác:
+# stage0-dialogue0.mp3 - Dialogue đầu tiên của Stage 0
+# stage0-dialogue1.mp3 - Dialogue thứ hai của Stage 0
+# stage1-dialogue0.mp3 - Dialogue đầu tiên của Stage 1
+# ...
