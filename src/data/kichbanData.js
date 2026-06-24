@@ -76,24 +76,11 @@ export const kichbanData = [
         }
       ]
     },
-    buttonText: "Tôi đã vào sân phủ",
-    countdown: 5
-  },
-
-  {
-    stage: 2,
-    title: "Sân Phủ",
-    location: "Vị trí: Khoảng sân rộng trước Tam Tòa",
-    speaker: "Cô",
-    background: anh4,
-    character: anh1,
-    characterName: "Cô",
-    characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
-    dialogues: [
+    postQuestion1Dialogues: [
       "Con hãy nhìn xuống dưới. Có một câu đối — hai bên trụ cổng.",
       "Câu đối đó kể chuyện về một cuộc gặp gỡ 400 năm trước. Cuộc gặp giữa quan trạng và Công chúa Liễu Hạnh bên quán nước. Con có biết quan trạng tên gì không?"
     ],
-    question: {
+    question2: {
       text: "Quan trạng trong câu chuyện tên gì?",
       choices: [
         {
@@ -113,7 +100,7 @@ export const kichbanData = [
         }
       ]
     },
-    postQuestion1Dialogues: [
+    postQuestion2Dialogues: [
       "Tốt rồi! Con đã tìm được manh mối đầu tiên.",
       "Nhưng hành trình vẫn chưa hết đâu. Theo ta vào sân phủ nhé.",
       "Ở đây còn giấu một bí mật thú vị về cách người xưa xây dựng ngôi phủ này. Hãy tìm Phủ chính."
@@ -123,11 +110,11 @@ export const kichbanData = [
   },
 
   {
-    stage: 3,
+    stage: 2,
     title: "Tam Tòa Thánh Mẫu",
     location: "Vị trí: Ban thờ Tam Tòa Thánh Mẫu",
     speaker: "Cô",
-    background: anh5,
+    background: anh4,
     character: anh1,
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
@@ -188,11 +175,11 @@ export const kichbanData = [
   },
 
   {
-    stage: 4,
+    stage: 3,
     title: "Điện Sơn Trang",
     location: "Vị trí: Điện Sơn Trang",
-    speaker: "Cô",
-    background: anh7,
+    speaker: "Cô",  
+    background: anh5,
     character: anh1,
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
@@ -252,7 +239,7 @@ export const kichbanData = [
   },
 
   {
-    stage: 5,
+    stage: 4,
     title: "Lầu Cô - Lầu Cậu",
     location: "Vị trí: Hai am thờ nhỏ bên sân",
     speaker: "Cô",
@@ -303,7 +290,7 @@ export const kichbanData = [
     countdown: 5
   },
   {
-    stage: 6,
+    stage: 5,
     title: "Kết Duyên Lành",
     location: "Vị trí: Quán nước đầu hành trình",
     speaker: "Cô",
@@ -313,8 +300,10 @@ export const kichbanData = [
     characterName: "Cô",
     characterStyle: "max-h-[340px] md:max-h-[420px] w-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.7)] brightness-[0.95]",
     dialogues: [
-      "Con đã hoàn thành hành trình rồi. Từ câu chuyện của vị trạng nguyên năm xưa, Điện Sơn Trang của núi rừng. Đến Lầu Cô, Lầu Cậu bên hồ. Mỗi nơi con đi qua đều là một mảnh ký ức. Và giờ đây, những mảnh ký ức ấy đã ghép lại thành một câu chuyện hoàn chỉnh. Phủ Tây Hồ không chỉ là một điểm đến để dâng hương. Đó còn là nơi lưu giữ lịch sử, tín ngưỡng và những câu chuyện đã được truyền từ thế hệ này sang thế hệ khác. Khi rời khỏi nơi đây, mong rằng con sẽ mang theo không chỉ những bức ảnh đẹp... Mà còn cả những câu chuyện đang sống dưới mái phủ này.",
-      "Hành trình kết thúc. Nhưng việc gìn giữ di sản thì không.\nMỗi câu chuyện được lắng nghe.\nMỗi giá trị được trân trọng.\nMỗi di sản được khám phá.\nĐều là một cách để quá khứ tiếp tục sống trong hiện tại.\nCảm ơn con đã đồng hành cùng Phủ Tây Hồ."
+      "Con đã hoàn thành hành trình rồi. Mỗi nơi con đi qua đều là một mảnh ký ức. Và giờ đây, những mảnh ký ức ấy đã ghép lại thành một câu chuyện hoàn chỉnh.",
+      "Phủ Tây Hồ không chỉ là một điểm đến để dâng hương. Đó còn là nơi lưu giữ lịch sử, tín ngưỡng và những câu chuyện đã được truyền từ thế hệ này sang thế hệ khác.",
+      "Khi rời khỏi nơi đây, mong rằng con sẽ mang theo không chỉ những bức ảnh đẹp...",
+      "Mà còn cả những câu chuyện đang sống dưới mái phủ này."
     ]
   }
 ];
