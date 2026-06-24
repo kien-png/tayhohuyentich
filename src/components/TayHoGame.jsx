@@ -189,55 +189,23 @@ export default function TayHoGame() {
       gain.connect(ctx.destination);
     } catch (e) { }
   };
-
-  // Sound chime helpers
-  const playNarration = async (stageIndex, dialogueIndex) => {
-    if (!audioEnabled) return;
+  const playAudioFile = async (audioPath) => {
+    if (!audioEnabled || !audioPath) return;
     
     try {
-      // Map specific dialogues to audio files
-      let audioPath = null;
-      
-      // Stage 0 - file a1 covers dialogue 0 to 5 (entire conversation)
-      if (stageIndex === 0 && dialogueIndex >= 0 && dialogueIndex <= 5) {
-        audioPath = `/assets/audio/a1.mp3`;
-      }
-      // Stage 1 - file a3 covers dialogue 0 to 2 + question
-      else if (stageIndex === 1 && dialogueIndex >= 0 && dialogueIndex <= 2) {
-        audioPath = `/assets/audio/a3.mp3`;
-      }
-      // Stage 2 (Tam Tòa) - file a8 covers dialogue 0 to 1
-      else if (stageIndex === 2 && dialogueIndex >= 0 && dialogueIndex <= 1) {
-        audioPath = `/assets/audio/a8.mp3`;
-      }
-      // Stage 3 (Điện Sơn Trang) - file a13 covers dialogue 0
-      else if (stageIndex === 3 && dialogueIndex === 0) {
-        audioPath = `/assets/audio/a13.mp3`;
-      }
-      // Stage 4 (Lầu Cô - Lầu Cậu) - file a18 covers dialogue 0
-      else if (stageIndex === 4 && dialogueIndex === 0) {
-        audioPath = `/assets/audio/a18.mp3`;
-      }
-      // Stage 5 (Kết Duyên Lành) - file a21 covers dialogue 0, file a22 covers dialogue 1
-      else if (stageIndex === 5) {
-        if (dialogueIndex === 0) {
-          audioPath = `/assets/audio/a21.mp3`;
-        } else if (dialogueIndex === 1) {
-          audioPath = `/assets/audio/a22.mp3`;
-        }
-      }
-      
-      // If no specific audio file, try default naming
-      if (!audioPath) {
-        audioPath = `/assets/audio/stage${stageIndex}-dialogue${dialogueIndex}.mp3`;
-      }
-
-      // Stop any currently playing narration before starting new one
       if (narratorAudioRef.current) {
+        const currentSrc = narratorAudioRef.current.src;
+        if (currentSrc && (currentSrc.endsWith(audioPath) || decodeURIComponent(currentSrc).endsWith(audioPath))) {
+          if (!narratorAudioRef.current.paused && !narratorAudioRef.current.ended) {
+            console.log(`Audio ${audioPath} is already playing, keeping it.`);
+            return;
+          }
+        }
         narratorAudioRef.current.pause();
         narratorAudioRef.current.currentTime = 0;
       }
       
+      console.log(`Playing audio: ${audioPath}`);
       const audio = new Audio(audioPath);
       audio.volume = 0.7;
       
@@ -250,376 +218,239 @@ export default function TayHoGame() {
       
       narratorAudioRef.current = audio;
       await audio.play();
-      
     } catch (error) {
       setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
+      console.log('Narration audio not available or failed to play', error);
     }
+  };
+
+  // Sound chime helpers
+  const playNarration = async (stageIndex, dialogueIndex) => {
+    // Map specific dialogues to audio files
+    let audioPath = null;
+    
+    // Stage 0 - file a1 covers dialogue 0 to 5 (entire conversation)
+    if (stageIndex === 0 && dialogueIndex >= 0 && dialogueIndex <= 5) {
+      audioPath = `/assets/audio/a1.mp3`;
+    }
+    // Stage 1 - file a3 covers dialogue 0 to 2 + question
+    else if (stageIndex === 1 && dialogueIndex >= 0 && dialogueIndex <= 2) {
+      audioPath = `/assets/audio/a3.mp3`;
+    }
+    // Stage 2 (Tam Tòa) - file a8 covers dialogue 0 to 1
+    else if (stageIndex === 2 && dialogueIndex >= 0 && dialogueIndex <= 1) {
+      audioPath = `/assets/audio/a8.mp3`;
+    }
+    // Stage 3 (Điện Sơn Trang) - file a13 covers dialogue 0
+    else if (stageIndex === 3 && dialogueIndex === 0) {
+      audioPath = `/assets/audio/a13.mp3`;
+    }
+    // Stage 4 (Lầu Cô - Lầu Cậu) - file a18 covers dialogue 0
+    else if (stageIndex === 4 && dialogueIndex === 0) {
+      audioPath = `/assets/audio/a18.mp3`;
+    }
+    // Stage 5 (Kết Duyên Lành) - file a21 covers dialogue 0, file a22 covers dialogue 1
+    else if (stageIndex === 5) {
+      if (dialogueIndex === 0) {
+        audioPath = `/assets/audio/a21.mp3`;
+      } else if (dialogueIndex === 1) {
+        audioPath = `/assets/audio/a22.mp3`;
+      }
+    }
+    
+    // If no specific audio file, try default naming
+    if (!audioPath) {
+      audioPath = `/assets/audio/stage${stageIndex}-dialogue${dialogueIndex}.mp3`;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Voice narration helpers
   const playQuestionNarration = async (stageIndex, questionType = 'question1') => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 1 - question is part of a3 file
-      if (stageIndex === 1) {
-        if (questionType === 'question1') {
-          audioPath = `/assets/audio/a3.mp3`;
-        } else if (questionType === 'question2') {
-          // Stage 1 question2 (Sân Phủ) - part of a4 file
-          audioPath = `/assets/audio/a4.mp3`;
-        }
+    // Stage 1 - question is part of a3 file
+    if (stageIndex === 1) {
+      if (questionType === 'question1') {
+        audioPath = `/assets/audio/a3.mp3`;
+      } else if (questionType === 'question2') {
+        // Stage 1 question2 (Sân Phủ) - part of a4 file
+        audioPath = `/assets/audio/a4.mp3`;
       }
-      // Stage 2 (Tam Tòa) - different questions
-      else if (stageIndex === 2) {
-        if (questionType === 'question1') {
-          audioPath = `/assets/audio/a8.mp3`;
-        } else if (questionType === 'question2') {
-          audioPath = `/assets/audio/a9.mp3`;
-        }
-      }
-      // Stage 3 (Điện Sơn Trang) - different questions
-      else if (stageIndex === 3) {
-        if (questionType === 'question1') {
-          audioPath = `/assets/audio/a13.mp3`;
-        } else if (questionType === 'question2') {
-          audioPath = `/assets/audio/a14.mp3`;
-        }
-      }
-      // Stage 4 (Lầu Cô - Lầu Cậu) - question is part of a18 file
-      else if (stageIndex === 4) {
-        audioPath = `/assets/audio/a18.mp3`;
-      }
-      
-      // If no specific audio file, try default naming
-      if (!audioPath) {
-        audioPath = `/assets/audio/stage${stageIndex}-question.mp3`;
-      }
-
-      // Stop any currently playing narration before starting new one
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
     }
+    // Stage 2 (Tam Tòa) - different questions
+    else if (stageIndex === 2) {
+      if (questionType === 'question1') {
+        audioPath = `/assets/audio/a8.mp3`;
+      } else if (questionType === 'question2') {
+        audioPath = `/assets/audio/a9.mp3`;
+      }
+    }
+    // Stage 3 (Điện Sơn Trang) - different questions
+    else if (stageIndex === 3) {
+      if (questionType === 'question1') {
+        audioPath = `/assets/audio/a13.mp3`;
+      } else if (questionType === 'question2') {
+        audioPath = `/assets/audio/a14.mp3`;
+      }
+    }
+    // Stage 4 (Lầu Cô - Lầu Cậu) - question is part of a18 file
+    else if (stageIndex === 4) {
+      audioPath = `/assets/audio/a18.mp3`;
+    }
+    
+    // If no specific audio file, try default naming
+    if (!audioPath) {
+      audioPath = `/assets/audio/stage${stageIndex}-question.mp3`;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Play narration for question feedback
   const playQuestionFeedbackNarration = async (stageIndex, isCorrect, questionType = 'question1') => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 1 question2 (Sân Phủ) feedback
-      if (stageIndex === 1 && questionType === 'question2') {
-        if (isCorrect) {
-          audioPath = `/assets/audio/a6.mp3`; // Correct answer feedback
-        } else {
-          audioPath = `/assets/audio/a5.mp3`; // Wrong answer feedback
-        }
+    // Stage 1 question1 feedback
+    if (stageIndex === 1 && questionType === 'question1') {
+      if (isCorrect) {
+        audioPath = `/assets/audio/a7.mp3`;
       }
-      // Stage 2 (Tam Tòa) feedback
-      else if (stageIndex === 2 && questionType === 'question2') {
-        if (isCorrect) {
-          audioPath = `/assets/audio/a11.mp3`; // Correct answer feedback
-        } else {
-          audioPath = `/assets/audio/a10.mp3`; // Wrong answer feedback
-        }
-      }
-      // Stage 3 (Điện Sơn Trang) feedback
-      else if (stageIndex === 3) {
-        if (questionType === 'question1' && isCorrect) {
-          audioPath = `/assets/audio/a14.mp3`; // Stage 3 question1 correct leads to question2
-        } else if (questionType === 'question2') {
-          if (isCorrect) {
-            audioPath = `/assets/audio/a16.mp3`; // Correct answer feedback
-          } else {
-            audioPath = `/assets/audio/a15.mp3`; // Wrong answer feedback
-          }
-        }
-      }
-      // Stage 4 (Lầu Cô - Lầu Cậu) feedback
-      else if (stageIndex === 4 && questionType === 'question1' && isCorrect) {
-        audioPath = `/assets/audio/a19.mp3`; // Stage 4 question1 correct feedback + postQuestion1
-      }
-      
-      // If no specific audio file, skip
-      if (!audioPath) {
-        console.log(`No audio path found for feedback stage ${stageIndex}, question ${questionType}, correct: ${isCorrect}`);
-        return;
-      }
-
-      console.log(`Playing feedback audio: ${audioPath}`);
-
-      // Stop current narration
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
     }
+    // Stage 1 question2 (Sân Phủ) feedback
+    else if (stageIndex === 1 && questionType === 'question2') {
+      if (isCorrect) {
+        audioPath = `/assets/audio/a6.mp3`; // Correct answer feedback
+      } else {
+        audioPath = `/assets/audio/a5.mp3`; // Wrong answer feedback
+      }
+    }
+    // Stage 2 (Tam Tòa) feedback
+    else if (stageIndex === 2 && questionType === 'question2') {
+      if (isCorrect) {
+        audioPath = `/assets/audio/a11.mp3`; // Correct answer feedback
+      } else {
+        audioPath = `/assets/audio/a10.mp3`; // Wrong answer feedback
+      }
+    }
+    // Stage 3 (Điện Sơn Trang) feedback
+    else if (stageIndex === 3) {
+      if (questionType === 'question1' && isCorrect) {
+        audioPath = `/assets/audio/a14.mp3`; // Stage 3 question1 correct leads to question2
+      } else if (questionType === 'question2') {
+        if (isCorrect) {
+          audioPath = `/assets/audio/a16.mp3`; // Correct answer feedback
+        } else {
+          audioPath = `/assets/audio/a15.mp3`; // Wrong answer feedback
+        }
+      }
+    }
+    // Stage 4 (Lầu Cô - Lầu Cậu) feedback
+    else if (stageIndex === 4 && questionType === 'question1' && isCorrect) {
+      audioPath = `/assets/audio/a19.mp3`; // Stage 4 question1 correct feedback + postQuestion1
+    }
+    
+    // If no specific audio path, skip
+    if (!audioPath) {
+      console.log(`No audio path found for feedback stage ${stageIndex}, question ${questionType}, correct: ${isCorrect}`);
+      return;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Play narration for postVerifiedDialogues
   const playPostVerifiedNarration = async (stageIndex, dialogueIndex) => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 2 (Tam Tòa) postVerifiedDialogues - file a9
-      if (stageIndex === 2) {
-        audioPath = `/assets/audio/a9.mp3`;
-      }
-      
-      if (!audioPath) {
-        console.log(`No audio path found for postVerified stage ${stageIndex}`);
-        return;
-      }
-
-      console.log(`Playing postVerified audio: ${audioPath}`);
-
-
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
+    // Stage 2 (Tam Tòa) postVerifiedDialogues - file a9
+    if (stageIndex === 2) {
+      audioPath = `/assets/audio/a9.mp3`;
     }
+    
+    if (!audioPath) {
+      console.log(`No audio path found for postVerified stage ${stageIndex}`);
+      return;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Play narration for postQuestion1Dialogues
   const playPostQuestion1Narration = async (stageIndex, dialogueIndex) => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 1 postQuestion1Dialogues (Sân Phủ dialogues) - file a4
-      if (stageIndex === 1) {
-        audioPath = `/assets/audio/a4.mp3`;
-      }
-      // Stage 4 (Lầu Cô - Lầu Cậu) postQuestion1Dialogues - part of a19
-      else if (stageIndex === 4) {
-        audioPath = `/assets/audio/a19.mp3`;
-      }
-      
-      if (!audioPath) {
-        console.log(`No audio path found for postQuestion1 stage ${stageIndex}`);
-        return;
-      }
-
-      console.log(`Playing postQuestion1 audio: ${audioPath}`);
-
-
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
+    // Stage 1 postQuestion1Dialogues (Sân Phủ dialogues) - file a4
+    if (stageIndex === 1) {
+      audioPath = `/assets/audio/a4.mp3`;
     }
+    // Stage 4 (Lầu Cô - Lầu Cậu) postQuestion1Dialogues - part of a19
+    else if (stageIndex === 4) {
+      audioPath = `/assets/audio/a19.mp3`;
+    }
+    
+    if (!audioPath) {
+      console.log(`No audio path found for postQuestion1 stage ${stageIndex}`);
+      return;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Play narration for postQuestion2Dialogues
   const playPostQuestion2Narration = async (stageIndex, dialogueIndex) => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 2 (Tam Tòa) postQuestion2Dialogues - file a12
-      if (stageIndex === 2) {
-        audioPath = `/assets/audio/a12.mp3`;
-      }
-      // Stage 3 (Điện Sơn Trang) postQuestion2Dialogues - file a17
-      else if (stageIndex === 3) {
-        audioPath = `/assets/audio/a17.mp3`;
-      }
-      
-      if (!audioPath) {
-        console.log(`No audio path found for postQuestion2 stage ${stageIndex}`);
-        return;
-      }
-
-      console.log(`Playing postQuestion2 audio: ${audioPath}`);
-
-
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
+    // Stage 2 (Tam Tòa) postQuestion2Dialogues - file a12
+    if (stageIndex === 2) {
+      audioPath = `/assets/audio/a12.mp3`;
     }
+    // Stage 3 (Điện Sơn Trang) postQuestion2Dialogues - file a17
+    else if (stageIndex === 3) {
+      audioPath = `/assets/audio/a17.mp3`;
+    }
+    
+    if (!audioPath) {
+      console.log(`No audio path found for postQuestion2 stage ${stageIndex}`);
+      return;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Play narration for wish feedback
   const playWishFeedbackNarration = async (stageIndex) => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 4 (Lầu Cô - Lầu Cậu) wish feedback - file a20
-      if (stageIndex === 4) {
-        audioPath = `/assets/audio/a20.mp3`;
-      }
-      
-      if (!audioPath) {
-        console.log(`No audio path found for wishFeedback stage ${stageIndex}`);
-        return;
-      }
-
-      console.log(`Playing wishFeedback audio: ${audioPath}`);
-
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
+    // Stage 4 (Lầu Cô - Lầu Cậu) wish feedback - file a20
+    if (stageIndex === 4) {
+      audioPath = `/assets/audio/a20.mp3`;
     }
+    
+    if (!audioPath) {
+      console.log(`No audio path found for wishFeedback stage ${stageIndex}`);
+      return;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   // Play narration for postChoiceDialogues
   const playPostChoiceNarration = async (stageIndex, dialogueIndex) => {
-    if (!audioEnabled) return;
+    let audioPath = null;
     
-    try {
-      let audioPath = null;
-      
-      // Stage 0 postChoiceDialogues - file a2 covers all postChoice dialogues
-      if (stageIndex === 0) {
-        audioPath = `/assets/audio/a2.mp3`;
-      }
-      
-      // If no specific audio file, try default naming
-      if (!audioPath) {
-        audioPath = `/assets/audio/stage${stageIndex}-postchoice${dialogueIndex}.mp3`;
-      }
-
-      // Stop any currently playing narration before starting new one
-      if (narratorAudioRef.current) {
-        narratorAudioRef.current.pause();
-        narratorAudioRef.current.currentTime = 0;
-      }
-      
-      const audio = new Audio(audioPath);
-      audio.volume = 0.7;
-      
-      audio.onloadstart = () => setIsNarrationPlaying(true);
-      audio.onended = () => setIsNarrationPlaying(false);
-      audio.onerror = () => {
-        setIsNarrationPlaying(false);
-        console.log(`Audio file not found: ${audioPath}`);
-      };
-      
-      narratorAudioRef.current = audio;
-      await audio.play();
-      
-    } catch (error) {
-      setIsNarrationPlaying(false);
-      console.log('Narration audio not available or failed to play');
+    // Stage 0 postChoiceDialogues - file a2 covers all postChoice dialogues
+    if (stageIndex === 0) {
+      audioPath = `/assets/audio/a2.mp3`;
     }
+    
+    // If no specific audio file, try default naming
+    if (!audioPath) {
+      audioPath = `/assets/audio/stage${stageIndex}-postchoice${dialogueIndex}.mp3`;
+    }
+
+    await playAudioFile(audioPath);
   };
 
   const stopNarration = () => {
@@ -723,18 +554,8 @@ export default function TayHoGame() {
       setTimeout(() => {
         playPostChoiceNarration(currentStage, 0);
       }, 300);
-    } else if (dialogueState === 'question1') {
-      setTimeout(() => {
-        playQuestionNarration(currentStage, 'question1');
-      }, 300);
-    } else if (dialogueState === 'question2') {
-      setTimeout(() => {
-        playQuestionNarration(currentStage, 'question2');
-      }, 300);
-    } else if (dialogueState === 'question3') {
-      setTimeout(() => {
-        playQuestionNarration(currentStage, 'question3');
-      }, 300);
+    } else if (dialogueState === 'question1' || dialogueState === 'question2' || dialogueState === 'question3') {
+      stopNarration();
     } else if (dialogueState === 'postVerifiedDialogues') {
       setTimeout(() => {
         playPostVerifiedNarration(currentStage, 0);
@@ -764,7 +585,6 @@ export default function TayHoGame() {
   useEffect(() => {
     const activeStates = [
       'dialogues', 'postChoiceDialogues', 
-      'question1', 'question2', 'question3',
       'question1_feedback', 'question2_feedback', 'question3_feedback',
       'preQuestion2Dialogues', 'postQuestion1Dialogues', 'postQuestion2Dialogues', 'postVerifiedDialogues',
       'wish_feedback'
