@@ -89,7 +89,8 @@ export default function TayHoGame() {
       console.log('Attempting to play background music...');
       const audio = new Audio('/assets/audio/background-music.mp3');
       audio.loop = true;
-      audio.volume = 0.3;
+      audio.volume = 0.8; // Tăng từ 0.3 lên 0.8 (80%)
+      audio.preload = 'auto';
       
       audio.onloadstart = () => {
         console.log('Background music loading...');
@@ -100,7 +101,7 @@ export default function TayHoGame() {
       };
       
       audio.onplay = () => {
-        console.log('Background music started playing');
+        console.log('Background music started playing at volume:', audio.volume);
       };
       
       audio.onerror = (e) => {
@@ -108,8 +109,18 @@ export default function TayHoGame() {
         console.error('Background music file not found at /assets/audio/background-music.mp3');
       };
       
+      // Ensure user interaction has occurred
+      const playPromise = audio.play();
       backgroundMusicRef.current = audio;
-      await audio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          console.log('Background music successfully started!');
+        }).catch(error => {
+          console.error('Background music autoplay was prevented:', error);
+          console.log('User needs to interact with the page first');
+        });
+      }
       
     } catch (error) {
       console.error('Background music failed to play:', error);
@@ -743,9 +754,9 @@ export default function TayHoGame() {
   // Control background music volume during narration
   useEffect(() => {
     if (isNarrationPlaying) {
-      adjustBackgroundMusicVolume(0.1); // Duck to 10% during narration
+      adjustBackgroundMusicVolume(0.3); // Tăng từ 0.1 lên 0.3 khi có narration
     } else {
-      adjustBackgroundMusicVolume(0.3); // Return to 30% when narration stops
+      adjustBackgroundMusicVolume(0.8); // Tăng từ 0.3 lên 0.8 khi không có narration
     }
   }, [isNarrationPlaying]);
 
@@ -1171,6 +1182,13 @@ export default function TayHoGame() {
               setGameStarted(true);
               if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
                 audioCtxRef.current.resume();
+              }
+              // Start background music when game starts
+              if (audioEnabled) {
+                setTimeout(() => {
+                  console.log('Game started - triggering background music');
+                  playBackgroundMusic();
+                }, 500);
               }
             }}
             className="group relative px-8 sm:px-10 py-3 sm:py-4 mt-4 sm:mt-6 rounded-full border-2 border-[#D4AF37] bg-[#1e110d]/80 text-[#D4AF37] hover:text-[#1e110d] hover:bg-[#D4AF37] font-serif font-semibold text-sm sm:text-base tracking-[0.2em] shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all duration-500 cursor-pointer animate-float active:scale-95"
