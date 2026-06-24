@@ -10,7 +10,7 @@ export default function TayHoGame() {
   const [showDialogueBox, setShowDialogueBox] = useState(false);
 
   // Dialogue state machine variables
-  const [dialogueState, setDialogueState] = useState('dialogues'); // 'dialogues', 'choices', 'choice_feedback', 'question1', 'question1_feedback', 'postVerifiedDialogues', 'question2', 'question2_feedback', 'postQuestion2Dialogues', 'question3', 'question3_feedback', 'postQuestion3Dialogues', 'wishChoices', 'wish_feedback', 'postWishDialogues', 'endingDialogues', 'complete', 'final'
+  const [dialogueState, setDialogueState] = useState('dialogues'); // 'dialogues', 'choices', 'choice_feedback', 'question1', 'question1_feedback', 'postVerifiedDialogues', 'preQuestion2Dialogues', 'question2', 'question2_feedback', 'postQuestion2Dialogues', 'question3', 'question3_feedback', 'postQuestion3Dialogues', 'wishChoices', 'wish_feedback', 'postWishDialogues', 'endingDialogues', 'complete', 'final'
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [customDialogue, setCustomDialogue] = useState('');
 
@@ -766,7 +766,7 @@ export default function TayHoGame() {
       'dialogues', 'postChoiceDialogues', 
       'question1', 'question2', 'question3',
       'question1_feedback', 'question2_feedback', 'question3_feedback',
-      'postQuestion1Dialogues', 'postQuestion2Dialogues', 'postVerifiedDialogues',
+      'preQuestion2Dialogues', 'postQuestion1Dialogues', 'postQuestion2Dialogues', 'postVerifiedDialogues',
       'wish_feedback'
     ];
     
@@ -792,6 +792,8 @@ export default function TayHoGame() {
         return stageData.dialogues[dialogueIndex];
       case 'postVerifiedDialogues':
         return stageData.postVerifiedDialogues[dialogueIndex];
+      case 'preQuestion2Dialogues':
+        return stageData.preQuestion2Dialogues[dialogueIndex];
       case 'postQuestion1Dialogues':
         return stageData.postQuestion1Dialogues[dialogueIndex];
       case 'postQuestion2Dialogues':
@@ -893,8 +895,8 @@ export default function TayHoGame() {
           setDialogueState('postVerifiedDialogues');
           setDialogueIndex(0);
         } else if (currentStage === 4) {
-          // Stage 4 (Điện Sơn Trang): đúng câu 1 (Không có tượng Ngũ Hổ) → question2
-          setDialogueState('question2');
+          // Stage 4 (Điện Sơn Trang): đúng câu 1 → preQuestion2Dialogues → question2
+          setDialogueState('preQuestion2Dialogues');
           setDialogueIndex(0);
           setVerified(false); // reset để câu hỏi 2 hiển thị choices
         } else if (currentStage === 5) {
@@ -954,6 +956,14 @@ export default function TayHoGame() {
           // Stage 5: sau postQuestion1Dialogues → wishChoices
           setDialogueState('wishChoices');
         }
+      }
+    }
+    else if (dialogueState === 'preQuestion2Dialogues') {
+      if (dialogueIndex < stageData.preQuestion2Dialogues.length - 1) {
+        setDialogueIndex(prev => prev + 1);
+      } else {
+        setDialogueState('question2');
+        setDialogueIndex(0);
       }
     }
     else if (dialogueState === 'postQuestion2Dialogues') {
@@ -1265,12 +1275,12 @@ export default function TayHoGame() {
         </div>
       </div>
 
-      <div className="flex-grow flex items-end justify-center relative px-4 select-none z-10 pointer-events-none mt-14 pb-0 min-h-[200px] sm:min-h-[280px]">
+      <div className="flex-grow flex items-end justify-center relative px-4 select-none z-10 pointer-events-none mt-14 pb-0 min-h-[80px] sm:min-h-[180px]">
       </div>
 
       {/* Interface Dialogue Box Section */}
       <div
-        className={`w-full p-4 pb-6 relative z-20 flex flex-col items-center gap-3 shrink-0 transition-opacity duration-1000 ${
+        className={`w-full px-2 sm:px-4 pb-4 sm:pb-6 relative z-20 flex flex-col items-center gap-2 sm:gap-3 shrink-0 transition-opacity duration-1000 ${
           gameStarted && dialogueVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -1279,10 +1289,10 @@ export default function TayHoGame() {
             <img
               src={stageData.character}
               alt={stageData.characterName}
-              className={`absolute bottom-[-32px] h-[66vh] max-h-[600px] object-contain pointer-events-auto z-0 ${
+              className={`absolute bottom-[-32px] h-[38vh] sm:h-[55vh] md:h-[66vh] max-h-[600px] object-contain pointer-events-auto z-0 ${
                 currentStage === 0 && !showDialogueBox
                   ? 'left-1/2 -translate-x-1/2 origin-bottom'
-                  : 'left-2 sm:left-4 origin-bottom-left'
+                  : 'left-1 sm:left-2 md:left-4 origin-bottom-left'
               } ${getCharacterClassName()}`}
             />
           </div>
